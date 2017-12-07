@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "author": "Sharon Kennedy <sharon.peishan.kennedy@gmail.com>",
   "dependencies": {
+    "axios": "^0.17.1",
+    "crypto": "^1.0.1",
     "gatsby": "^1.9.127",
     "gatsby-link": "^1.6.30",
     "gatsby-plugin-react-helmet": "^1.0.8",

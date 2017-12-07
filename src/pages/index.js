@@ -11,3 +11,13 @@ const IndexPage = () => (
 )
 
 export default IndexPage
+
+export const query = graphql`
+  query HomeQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
