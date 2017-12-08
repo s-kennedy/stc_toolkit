@@ -3,6 +3,8 @@ import { withStyles } from 'material-ui/styles';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, convertFromRaw, EditorState, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { RIEInput } from 'riek'
+import { isString } from 'lodash'
 
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -20,15 +22,9 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    const blocksFromHTML = convertFromHTML(this.props.text);
-    const contentState = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    const editorState = EditorState.createWithContent(contentState);
-    this.state = { editing: false, editorState }
+    this.state = { editing: false, text: this.props.text }
     this.toggleEditing = () => this._toggleEditing()
-    this.handleEditorStateChange = (state) => this._handleEditorStateChange(state)
+    this.handleEditorChange = (event) => this._handleEditorChange(event)
     this.doneEditing = () => this._doneEditing();
   }
 
@@ -36,34 +32,36 @@ class Header extends React.Component {
     this.setState({ editing: !this.state.editing })
   }
 
-  _handleEditorStateChange (editorState) {
-    this.setState({
-      editorState,
-    });
+  _handleEditorChange (event) {
+    const text = event.currentTarget.value;
+    this.setState({ text });
   };
 
   _doneEditing() {
     this.toggleEditing();
-    const contentToUpdate = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
-    console.log('contentToUpdate', contentToUpdate)
-    this.props.updateContent(this.props.index, contentToUpdate)
+    this.props.updateContent(this.props.index, this.state.text)
   }
 
   render() {
-    if (this.state.editing) {
-      const { editorState } = this.state;
+    const { text } = this.state;
 
+    if (this.state.editing) {
       return (
         <div>
-          <Editor editorState={editorState} onEditorStateChange={this.handleEditorStateChange} />
+          <input
+            value={ text }
+            onChange={this.handleEditorChange}
+          />
           <p onClick={this.doneEditing}>done editing</p>
         </div>
       )
     }
 
+    const content = draftToHtml(this.props.text);
+
     return (
       <div className={this.props.classes.header} onClick={this.toggleEditing}>
-        { this.props.text }
+        { text }
       </div>
     )
   }
