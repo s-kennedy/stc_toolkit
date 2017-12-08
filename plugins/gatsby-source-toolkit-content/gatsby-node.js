@@ -1,31 +1,56 @@
-const axios = require(`axios`)
-const crypto = require(`crypto`)
+const axios = require(`axios`);
+const crypto = require(`crypto`);
 
 exports.sourceNodes = ({ boundActionCreators }, { resourceType }) => {
-  const { createNode } = boundActionCreators
-  const url = `http://localhost:3000/${resourceType}`
+  const { createNode } = boundActionCreators;
+  const url = `http://localhost:3000/${resourceType}`;
 
   return new Promise((resolve, reject) => {
     axios.get(url)
       .then((response) => {
         const resources = response.data;
+
         resources.map((resource) => {
-          const node = {
-            id: `${resourceType}-${resource.id}`,
+          const parentNodeId = `${resourceType}-${resource.id}`
+          const contentNodeId = `${resourceType}-${resource.id}-content`
+          const parentNodeContent = {
+            id: resource.id,
+            title: resource.title,
+            slug: resource.slug
+          }
+
+          const parentNode = {
+            id: parentNodeId,
             parent: null,
-            children: [],
+            children: [contentNodeId],
             internal: {
               type: `${resourceType}`,
               contentDigest: crypto
                 .createHash(`md5`)
-                .update(JSON.stringify(resource))
+                .update(JSON.stringify(parentNodeContent))
                 .digest(`hex`),
               mediaType: `application/json`,
-              content: JSON.stringify(resource),
+              content: JSON.stringify(parentNodeContent)
             }
           };
 
-          createNode(node)
+          const contentNode = {
+            id: contentNodeId,
+            parent: parentNodeId,
+            children: [],
+            internal: {
+              type: `${resourceType}_content`,
+              contentDigest: crypto
+                .createHash(`md5`)
+                .update(JSON.stringify(resource.content))
+                .digest(`hex`),
+              mediaType: `application/json`,
+              content: JSON.stringify(resource.content)
+            }
+          }
+
+          createNode(parentNode);
+          createNode(contentNode);
         })
         resolve()
       })
@@ -35,5 +60,5 @@ exports.sourceNodes = ({ boundActionCreators }, { resourceType }) => {
         reject()
       });
   })
-}
+};
 

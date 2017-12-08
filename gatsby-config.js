@@ -5,8 +5,8 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
-      resolve: "gatsby-source-toolkit-contentg",
+      resolve: "gatsby-source-toolkit-content",
       options: { resourceType: "pages" }
     }
-  ],
+  ]
 }
