@@ -15,7 +15,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
-    const template = path.resolve('src/templates/about.js');
+    const template = path.resolve('src/templates/about.jsx');
 
     resolve(
       graphql(

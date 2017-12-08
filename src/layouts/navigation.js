@@ -12,8 +12,11 @@ import Link from 'gatsby-link'
 
 const styles = theme => ({
   root: {
-    marginTop: theme.spacing.unit * 3,
     width: '100%',
+  },
+  appBar: {
+    backgroundColor: '#fff',
+    color: '#000'
   },
   flex: {
     flex: 1,
@@ -30,14 +33,14 @@ function ButtonAppBar(props) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+        <Toolbar className={classes.appBar}>
+          <IconButton className={classes.menuButton} color="default" aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
             Child Sensitivity Toolkit
           </Typography>
-          <Button color="contrast">
+          <Button color="default">
             <Link to="/about/save-the-children">About</Link>
           </Button>
         </Toolbar>
