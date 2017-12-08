@@ -41,7 +41,7 @@ export default class AboutPage extends React.Component {
   }
 
   _updateContent(index, content) {
-    const newContent = update(this.state.content, { [index]: { text: { $set: content }}})
+    const newContent = update(this.state.content, { [index]: { $merge: content }})
     this.setState({ content: newContent })
   }
 

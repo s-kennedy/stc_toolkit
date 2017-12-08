@@ -43,8 +43,7 @@ class Paragraph extends React.Component {
   _doneEditing() {
     this.toggleEditing();
     const contentToUpdate = convertToRaw(this.state.editorState.getCurrentContent());
-    console.log('contentToUpdate', contentToUpdate)
-    this.props.updateContent(this.props.index, contentToUpdate)
+    this.props.updateContent(this.props.index, { text: contentToUpdate })
   }
 
   render() {

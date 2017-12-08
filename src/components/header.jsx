@@ -39,7 +39,7 @@ class Header extends React.Component {
 
   _doneEditing() {
     this.toggleEditing();
-    this.props.updateContent(this.props.index, this.state.text)
+    this.props.updateContent(this.props.index, { text: this.state.text })
   }
 
   render() {

@@ -12,7 +12,7 @@ function ContentGenerator (contentJson, updateContent) {
       case 'paragraph':
       return <Paragraph key={index} index={index} text={obj.text} updateContent={updateContent} />;
       case 'image':
-      return <Image key={index} index={index} path={obj.path} caption={obj.caption} />
+      return <Image key={index} index={index} source={obj.source} caption={obj.caption} updateContent={updateContent} />
     }
   })
 
