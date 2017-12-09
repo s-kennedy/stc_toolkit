@@ -1,56 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
+import Link from 'gatsby-link';
+import logo from '../assets/img/STC_Logo_Horiz.png';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 
-import Link from 'gatsby-link'
-
-const styles = theme => ({
-  root: {
+const styles = {
+  logo: {
+    width: '200px',
+    marginBottom: '0'
+  },
+  navbarTitle: {
     width: '100%',
-  },
-  appBar: {
-    backgroundColor: '#fff',
-    color: '#000'
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-});
-
-function ButtonAppBar(props) {
-  const { classes } = props;
-
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.appBar}>
-          <IconButton className={classes.menuButton} color="default" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography type="title" color="inherit" className={classes.flex}>
-            Child Sensitivity Toolkit
-          </Typography>
-          <Button color="default">
-            <Link to="/about/save-the-children">About</Link>
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+    textAlign: 'center',
+    fontSize: '1.4rem'
+  }
 }
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+export default class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
 
-export default withStyles(styles)(ButtonAppBar);
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar color="faded" light expand="md">
+          <NavbarBrand href="/">
+            <img style={styles.logo} src={logo} alt='Save the Children' />
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <Link className='nav-link' to="/about/">About</Link>
+              </NavItem>
+              <NavItem>
+                <Link className='nav-link' to="/about/">Still About</Link>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu >
+                  <DropdownItem>
+                    Option 1
+                  </DropdownItem>
+                  <DropdownItem>
+                    Option 2
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Reset
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div>
+    );
+  }
+}

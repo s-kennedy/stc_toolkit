@@ -1,0 +1,13 @@
+@import "typography";
+@import "variables";
+
+
+.large {
+  font-size: 150%;
+}
+
+section {
+  &:nth-of-type(even) {
+    background-color: $lightBiscuit;
+  }
+}

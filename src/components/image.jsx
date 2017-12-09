@@ -1,13 +1,6 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles';
 import ImageUploader from 'react-images-upload';
 
-
-const styles = theme => ({
-  img: {
-    width: '100%'
-  }
-});
 
 class Image extends React.Component {
   static propTypes = {};
@@ -64,7 +57,7 @@ class Image extends React.Component {
     }
 
     return (
-      <div className={this.props.classes.img} onClick={this.toggleEditing}>
+      <div className={'img'} onClick={this.toggleEditing}>
         <img src={image} alt={caption} />
         <small>{caption}</small>
       </div>
@@ -72,4 +65,4 @@ class Image extends React.Component {
   }
 };
 
-export default withStyles(styles)(Image);
+export default Image;

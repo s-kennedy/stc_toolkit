@@ -1,19 +1,10 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, convertFromRaw, EditorState, ContentState, convertFromHTML } from 'draft-js';
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-
-const styles = theme => ({
-  para: {
-    fontFamily: "'Gill Sans Infant', 'Helvetica', 'sans-serif'",
-    fontSize: '18px',
-    lineHeight: '26px',
-  }
-});
 
 class Paragraph extends React.Component {
   static propTypes = {};
@@ -60,11 +51,11 @@ class Paragraph extends React.Component {
 
     const content = draftToHtml(this.props.text);
     return (
-      <div className={this.props.classes.para} onClick={this.toggleEditing}>
+      <div className={'para'} onClick={this.toggleEditing}>
         <div dangerouslySetInnerHTML={ {__html: content} } />
       </div>
     )
   }
 };
 
-export default withStyles(styles)(Paragraph);
+export default Paragraph;

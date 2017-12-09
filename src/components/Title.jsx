@@ -1,6 +1,17 @@
 import React from 'react'
 
-class Header extends React.Component {
+const styles = {
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '2rem',
+  },
+  title: {
+    borderBottom: '2px solid #DA291C'
+  }
+}
+
+class Title extends React.Component {
   static propTypes = {};
 
   constructor(props) {
@@ -22,7 +33,7 @@ class Header extends React.Component {
 
   _doneEditing() {
     this.toggleEditing();
-    this.props.updateContent(this.props.index, { text: this.state.text })
+    this.props.updateTitle({ text: this.state.text })
   }
 
   render() {
@@ -41,11 +52,13 @@ class Header extends React.Component {
     }
 
     return (
-      <div className={'header'} onClick={this.toggleEditing}>
-        <h3>{ text }</h3>
+      <div className='title-container' style={styles.titleContainer}>
+        <div className='title' onClick={this.toggleEditing} style={styles.title}>
+          <h2>{ text }</h2>
+        </div>
       </div>
     )
   }
 };
 
-export default Header;
+export default Title;

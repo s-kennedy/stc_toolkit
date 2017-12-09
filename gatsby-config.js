@@ -7,6 +7,12 @@ module.exports = {
     {
       resolve: "gatsby-source-toolkit-content",
       options: { resourceType: "pages" }
-    }
+    },
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        precision: 8,
+      },
+    },
   ]
 };

@@ -5,19 +5,20 @@
   "author": "Sharon Kennedy <sharon.peishan.kennedy@gmail.com>",
   "dependencies": {
     "axios": "^0.17.1",
+    "bootstrap": "^4.0.0-beta.2",
     "crypto": "^1.0.1",
     "draft-js": "^0.10.4",
     "draftjs-to-html": "^0.8.1",
     "gatsby": "^1.9.127",
     "gatsby-link": "^1.6.30",
     "gatsby-plugin-react-helmet": "^1.0.8",
+    "gatsby-plugin-sass": "^1.0.14",
     "immutability-helper": "^2.6.0",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
-    "material-ui": "^1.0.0-beta.22",
-    "material-ui-icons": "^1.0.0-beta.17",
     "react-draft-wysiwyg": "^1.11.0",
-    "react-images-upload": "^1.1.1"
+    "react-images-upload": "^1.1.1",
+    "reactstrap": "^5.0.0-alpha.4"
   },
   "keywords": [
     "gatsby"

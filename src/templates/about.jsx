@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'gatsby-link';
+import Title from '../components/Title'
 import ContentGenerator from '../utils/ContentGenerator';
 import update from 'immutability-helper';
 import axios from 'axios';
+
+import { Button } from 'reactstrap';
 
 
 export default class AboutPage extends React.Component {
@@ -15,6 +18,7 @@ export default class AboutPage extends React.Component {
       content: JSON.parse(this.props.data.pages.childPagesContent.internal.content)
     }
     this.updateContent = (index, newContent) => this._updateContent(index, newContent)
+    this.updateTitle = (newTitle) => this._updateTitle(newTitle)
     this.saveChanges = () => this._saveChanges();
   }
 
@@ -45,15 +49,20 @@ export default class AboutPage extends React.Component {
     this.setState({ content: newContent })
   }
 
+  _updateTitle(newTitle) {
+    const newContent = update(this.state.pageData, { title: { $set: newTitle }})
+    this.setState({ pageData: newContent })
+  }
+
   render() {
     const { content } = this.state;
     const contentComponents = ContentGenerator(content, this.updateContent);
     console.log('content', content)
     return (
-      <div>
+      <div className='page'>
+        <Title text={this.state.pageData.title} updateTitle={this.updateTitle} />
         { contentComponents }
-        <Link to="/">Home</Link>
-        <button onClick={this.saveChanges}>Save changes</button>
+        <Button onClick={this.saveChanges}>Save changes</Button>
       </div>
     )
   }
