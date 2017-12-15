@@ -4,10 +4,11 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   const { createNodeField } = boundActionCreators
 
   if (node.internal.type === `pages`) {
-    const nodeContent = JSON.parse(node.internal.content)
-    const slug = nodeContent.slug
+    const nodeContent = JSON.parse(node.internal.content);
+    const { template, slug } = nodeContent;
 
-    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: 'template', value: template });
+    createNodeField({ node, name: 'slug', value: slug });
   }
 }
 
@@ -15,8 +16,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
-    const template = path.resolve('src/templates/about.jsx');
-
     resolve(
       graphql(
       `{
@@ -28,6 +27,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 }
                 fields {
                   slug
+                  template
                 }
                 childPagesContent {
                   internal {
@@ -46,6 +46,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
 
         result.data.allPages.edges.forEach(edge => {
+          const template = path.resolve(`src/templates/${edge.node.fields.template}`);
           createPage({
             path: edge.node.fields.slug, // required
             component: template,

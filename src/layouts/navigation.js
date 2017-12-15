@@ -58,7 +58,7 @@ export default class Navigation extends React.Component {
               <NavItem>
                 <Link className='nav-link' to="/about/">Still About</Link>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
+              <UncontrolledDropdown nav>
                 <DropdownToggle nav caret>
                   Options
                 </DropdownToggle>

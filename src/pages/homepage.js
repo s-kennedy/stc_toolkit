@@ -18,7 +18,7 @@ const IndexPage = (props) => {
         <div className='headline-holder'>
           <h1 className="display-3">Child Sensitivity in Poverty Alleviation Toolkit</h1>
         </div>
-        <p className="lead">Here we need a quick introduction to the toolkit.</p>
+        <p className="lead">Here we need a tagline for the toolkit.</p>
       </Jumbotron>
 
       <Section>

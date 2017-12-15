@@ -1,4 +1,5 @@
 import React from 'react'
+import ContentGenerator from '../utils/ContentGenerator';
 
 const centeredStyles = {
   container: {
@@ -20,10 +21,12 @@ const styles = {
 }
 
 const Section = (props) => {
+  const contentComponents = ContentGenerator(props.children, props.updateContent);
+
   return (
     <section className={props.classes}>
       <div style={props.centered ? centeredStyles.container : styles.container} className='container col-xs-12 col-sm-8'>
-          {props.children}
+          { contentComponents }
       </div>
     </section>
   );
