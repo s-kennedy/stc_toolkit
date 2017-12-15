@@ -44,8 +44,8 @@ export default class AboutPage extends React.Component {
      .catch((err) => console.log(err)) // Handle errors
   }
 
-  _updateContent(index, content) {
-    const newContent = update(this.state.content, { [index]: { $merge: content }})
+  _updateContent(index, section) {
+    const newContent = update(this.state.content, { [index]: { $merge: section }})
     this.setState({ content: newContent })
   }
 
@@ -59,7 +59,7 @@ export default class AboutPage extends React.Component {
     const contentComponents = ContentGenerator(content, this.updateContent);
     console.log('content', content)
     return (
-      <div className='page'>
+      <div className='about'>
         <Title text={this.state.pageData.title} updateTitle={this.updateTitle} />
         { contentComponents }
         <Button onClick={this.saveChanges}>Save changes</Button>

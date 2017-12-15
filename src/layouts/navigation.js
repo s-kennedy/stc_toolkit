@@ -52,29 +52,28 @@ export default class Navigation extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Link className='nav-link' to="/about/">About</Link>
-              </NavItem>
-              <NavItem>
-                <Link className='nav-link' to="/about/">Still About</Link>
-              </NavItem>
               <UncontrolledDropdown nav>
                 <DropdownToggle nav caret>
-                  Options
+                  About
                 </DropdownToggle>
                 <DropdownMenu >
                   <DropdownItem>
-                    Option 1
+                    <Link className='nav-link' to="/about/toolkit">About This Toolkit</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    Option 2
+                    <Link className='nav-link' to="/about/child-sensitivity">About Child Sensitivity</Link>
                   </DropdownItem>
-                  <DropdownItem divider />
                   <DropdownItem>
-                    Reset
+                    <Link className='nav-link' to="/about/save-the-children">About Save the Children</Link>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <NavItem>
+                <Link className='nav-link' to="/">Edit page</Link>
+              </NavItem>
+              <NavItem>
+                <Link className='nav-link' to="/">Log out</Link>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { Editor } from 'react-draft-wysiwyg';
+import { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js';
+import { Button } from 'reactstrap';
 
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -55,16 +56,21 @@ class Paragraph extends React.Component {
       const { editorState } = this.state;
 
       return (
-        <div>
+        <div className="para edit-container">
           <Editor editorState={editorState} onEditorStateChange={this.handleEditorStateChange} />
-          <p onClick={this.doneEditing}>done editing</p>
+          <div className="edit-action">
+            <Button onClick={this.doneEditing}>Done</Button>
+          </div>
         </div>
       )
     }
 
     return (
-      <div className={'para'} onClick={this.toggleEditing}>
+      <div className='para edit-container'>
         <div dangerouslySetInnerHTML={ {__html: this.state.text} } />
+        <div className="edit-action">
+          <Button onClick={this.toggleEditing}>Edit</Button>
+        </div>
       </div>
     )
   }

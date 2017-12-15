@@ -1,35 +1,44 @@
 import React from 'react'
 import ContentGenerator from '../utils/ContentGenerator';
+import update from 'immutability-helper';
 
-const centeredStyles = {
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '3rem'
-  }
-}
 
 const styles = {
   container: {
-    display: 'flex',
     padding: '3rem',
-  },
-  column: {
-    flex: '1 1 50%',
   }
 }
 
-const Section = (props) => {
-  const contentComponents = ContentGenerator(props.children, props.updateContent);
+class Section extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = { content: this.props.children }
+    this.updateParentContent = (index, content) => this._updateParentContent(index, content)
+  }
 
-  return (
-    <section className={props.classes}>
-      <div style={props.centered ? centeredStyles.container : styles.container} className='container col-xs-12 col-sm-8'>
+  _updateParentContent(index, content) {
+    console.log('index', index);
+    console.log('content', content);
+    console.log('this.state.content', this.state.content)
+    const newContent = update(this.state.content, { [index]: { $merge: content }})
+    this.setState({ content: newContent }, () => {
+      this.props.updateContent(this.props.index, this.state.content)
+    })
+  }
+
+  render() {
+    const { content } = this.state;
+    const contentComponents = ContentGenerator(content, this.updateParentContent);
+
+    return (
+      <section className={this.props.classes}>
+        <div style={styles.container} className='container col-xs-12 col-sm-8'>
           { contentComponents }
-      </div>
-    </section>
-  );
+        </div>
+      </section>
+    );
+  }
+
 };
 
 

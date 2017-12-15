@@ -13,7 +13,7 @@ const CallToAction = (props) => {
   const contentComponents = ContentGenerator(props.children, props.updateContent);
 
   return (
-    <section className={props.classes}>
+    <section className={`call-to-action ${props.classes}`}>
       <div style={styles.container} className='container col-xs-12 col-sm-8'>
         { contentComponents }
       </div>

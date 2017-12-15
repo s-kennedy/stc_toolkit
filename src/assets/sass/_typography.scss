@@ -40,6 +40,14 @@ button {
   font-size: 1.111rem;
 }
 
+a {
+  color: $plum;
+
+  &:active, &:hover, &:focus {
+    color: transparentize($plum, 0.1);
+  }
+}
+
 .dropdown-menu {
   button {
     font-family: 'Gill Sans Infant', 'Helvetica', sans-serif;

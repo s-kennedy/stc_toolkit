@@ -1,19 +1,18 @@
 import React from 'react'
 import { Button } from 'reactstrap';
 
-
 const styles = {
-  titleContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '2rem',
-  },
   title: {
-    borderBottom: '2px solid #DA291C'
+    margin: 0
+  },
+  headlineHolder: {
+    backgroundColor: '#FFFFFF',
+    padding: '2px 20px',
+    borderRadius: '8px'
   }
 }
 
-class Title extends React.Component {
+class DisplayTitle extends React.Component {
   static propTypes = {};
 
   constructor(props) {
@@ -35,7 +34,7 @@ class Title extends React.Component {
 
   _doneEditing() {
     this.toggleEditing();
-    this.props.updateTitle({ text: this.state.text })
+    this.props.updateTitle(this.state.text)
   }
 
   render() {
@@ -43,33 +42,31 @@ class Title extends React.Component {
 
     if (this.state.editing) {
       return (
-        <div className='title-container' style={styles.titleContainer}>
-          <div className='title edit-container' style={styles.title}>
-            <h2>
-              <input
-                value={ text }
-                onChange={this.handleEditorChange}
-              />
-            </h2>
-            <div className="edit-action">
-              <Button onClick={this.doneEditing}>Done</Button>
-            </div>
+        <div className='display-title edit-container'>
+          <h1 className="display-3">
+            <input
+              value={ text }
+              onChange={this.handleEditorChange}
+            />
+          </h1>
+          <div className="edit-action">
+            <Button onClick={this.doneEditing}>Done</Button>
           </div>
         </div>
       )
     }
 
     return (
-      <div className='title-container' style={styles.titleContainer}>
-        <div className='title edit-container' style={styles.title}>
-          <h2>{ text }</h2>
-          <div className="edit-action">
+      <div className='display-title edit-container'>
+        <h1 className="display-3" style={styles.title}>
+          <span className="headline-holder" style={styles.headlineHolder}>{ text }</span>
+        </h1>
+        <div className="edit-action">
             <Button onClick={this.toggleEditing}>Edit</Button>
           </div>
-        </div>
       </div>
     )
   }
 };
 
-export default Title;
+export default DisplayTitle;

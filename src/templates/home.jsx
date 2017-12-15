@@ -1,11 +1,23 @@
 import React from 'react';
 import Link from 'gatsby-link';
-import Title from '../components/Title'
+import DisplayTitle from '../components/DisplayTitle'
 import ContentGenerator from '../utils/ContentGenerator';
 import update from 'immutability-helper';
 import axios from 'axios';
+// import bgImage from '../assets/img/home-header.jpg';
 
 import { Jumbotron, Button } from 'reactstrap';
+
+const styles = {
+  jumbotron: {
+    display: 'flex',
+    background: 'url(https://www.savethechildren.org.uk/content/dam/global/images/countries/syria/rescue-at-sea-vos-sc127177-orig.jpg.thumbimage.1536.1536.jpg) no-repeat center center',
+    backgroundSize: 'cover',
+    height: '60vh',
+    minHeight: '440px',
+    alignItems: 'center'
+  }
+}
 
 
 export default class HomePage extends React.Component {
@@ -24,10 +36,13 @@ export default class HomePage extends React.Component {
 
   _saveChanges() {
     const pageId = this.state.pageData.id;
+    const pageTitle = this.state.pageData.title;
+    console.log('this.state.pageData', this.state.pageData)
     const url = `http://localhost:3000/pages/${pageId}`;
     const data = {
       page: {
-        content: this.state.content
+        content: this.state.content,
+        title: pageTitle
       },
       id: pageId
     }
@@ -50,6 +65,7 @@ export default class HomePage extends React.Component {
   }
 
   _updateTitle(newTitle) {
+    console.log('newTitle', newTitle)
     const newContent = update(this.state.pageData, { title: { $set: newTitle }})
     this.setState({ pageData: newContent })
   }
@@ -60,12 +76,8 @@ export default class HomePage extends React.Component {
     console.log('content', content)
     return (
       <div className='home'>
-        <Jumbotron>
-          <div className='headline-holder'>
-            <h1 className="display-3">
-              <Title text={this.state.pageData.title} updateTitle={this.updateTitle} />
-            </h1>
-          </div>
+        <Jumbotron style={styles.jumbotron}>
+          <DisplayTitle text={this.state.pageData.title} updateTitle={this.updateTitle} />
         </Jumbotron>
 
         { contentComponents }

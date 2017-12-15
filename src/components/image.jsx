@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageUploader from 'react-images-upload';
+import { Button } from 'reactstrap';
 
 
 class Image extends React.Component {
@@ -31,7 +32,6 @@ class Image extends React.Component {
   _handleImageChange(image) {
     const reader = new FileReader();
     reader.onloadend = () => {
-      console.log('image read!')
       this.setState({ image: reader.result })
     }
     reader.readAsDataURL(image[0]);
@@ -42,7 +42,7 @@ class Image extends React.Component {
 
     if (editing) {
       return (
-        <div>
+        <div className='edit-container'>
           <ImageUploader
             withIcon={true}
             withPreview={true}
@@ -51,15 +51,20 @@ class Image extends React.Component {
             onChange={this.handleImageChange}
           />
           <input value={caption} onChange={this.handleCaptionChange} />
-          <p onClick={this.doneEditing}>done editing</p>
+          <div className="edit-action">
+            <Button onClick={this.doneEditing}>Done</Button>
+          </div>
         </div>
       )
     }
 
     return (
-      <div className={'img'} onClick={this.toggleEditing}>
+      <div className='img edit-container'>
         <img src={image} alt={caption} />
         <small>{caption}</small>
+        <div className="edit-action">
+          <Button onClick={this.toggleEditing}>Edit</Button>
+        </div>
       </div>
     )
   }

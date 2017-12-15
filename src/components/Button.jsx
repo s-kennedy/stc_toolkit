@@ -53,7 +53,7 @@ class STCButton extends React.Component {
     }
 
     return (
-      <Button>
+      <Button className="stc-btn">
         <Link to={ link }>{ anchor }</Link>
       </Button>
     )

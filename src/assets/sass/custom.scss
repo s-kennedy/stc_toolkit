@@ -1,5 +1,5 @@
-@import "typography";
 @import "variables";
+@import "typography";
 
 
 .large {
@@ -9,5 +9,73 @@
 section {
   &:nth-of-type(even) {
     background-color: $lightBiscuit;
+  }
+}
+
+.edit-container {
+  position: relative;
+
+  .edit-action {
+    position: absolute;
+    top: 0;
+    right: -66px;
+    display: flex;
+  }
+}
+
+.home {
+  .container {
+    display: flex;
+
+    .header {
+      display: flex;
+    }
+
+    .header, .para {
+      flex: 1 1 50%;
+    }
+  }
+}
+
+.about {
+  .container {
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      display: flex;
+    }
+
+    .img {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.headline-holder {
+  background-color: white;
+  padding: 2px 20px;
+}
+
+section.call-to-action {
+  padding: 3rem;
+  background-color: $plum;
+
+  .para {
+    font-size: 3rem;
+    color: white;
+    padding: 1rem;
+  }
+
+  button.stc-btn {
+    background-color: white;
+    border: none;
+
+    &:active, &:hover, &:focus {
+      background-color: transparentize(white, 0.1);
+    }
   }
 }

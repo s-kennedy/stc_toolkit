@@ -1,4 +1,11 @@
 import React from 'react'
+import { Button } from 'reactstrap';
+
+const styles = {
+  header: {
+    display: 'flex'
+  }
+}
 
 class Header extends React.Component {
   static propTypes = {};
@@ -30,19 +37,30 @@ class Header extends React.Component {
 
     if (this.state.editing) {
       return (
-        <div>
-          <input
-            value={ text }
-            onChange={this.handleEditorChange}
-          />
-          <p onClick={this.doneEditing}>done editing</p>
+        <div className='header' style={styles.header}>
+          <div className="edit-container">
+            <h3>
+              <input
+                value={ text }
+                onChange={this.handleEditorChange}
+              />
+            </h3>
+            <div className="edit-action">
+              <Button onClick={this.doneEditing}>Done</Button>
+            </div>
+          </div>
         </div>
       )
     }
 
     return (
-      <div className={'header'} onClick={this.toggleEditing}>
-        <h3>{ text }</h3>
+      <div className='header'>
+        <div className="edit-container">
+          <h3>{ text }</h3>
+          <div className="edit-action">
+            <Button onClick={this.toggleEditing}>Edit</Button>
+          </div>
+        </div>
       </div>
     )
   }
