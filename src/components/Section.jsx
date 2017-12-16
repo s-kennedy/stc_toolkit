@@ -22,7 +22,7 @@ class Section extends React.Component {
     console.log('this.state.content', this.state.content)
     const newContent = update(this.state.content, { [index]: { $merge: content }})
     this.setState({ content: newContent }, () => {
-      this.props.updateContent(this.props.index, this.state.content)
+      this.props.updateContent(this.props.index, { content: this.state.content })
     })
   }
 

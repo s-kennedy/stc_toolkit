@@ -25,6 +25,7 @@ export default class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log('props', this.props)
     this.state = {
       pageData: JSON.parse(this.props.data.pages.internal.content),
       content: JSON.parse(this.props.data.pages.childPagesContent.internal.content)
@@ -65,7 +66,6 @@ export default class HomePage extends React.Component {
   }
 
   _updateTitle(newTitle) {
-    console.log('newTitle', newTitle)
     const newContent = update(this.state.pageData, { title: { $set: newTitle }})
     this.setState({ pageData: newContent })
   }
@@ -73,7 +73,6 @@ export default class HomePage extends React.Component {
   render() {
     const { content } = this.state;
     const contentComponents = ContentGenerator(content, this.updateContent);
-    console.log('content', content)
     return (
       <div className='home'>
         <Jumbotron style={styles.jumbotron}>

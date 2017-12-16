@@ -53,9 +53,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             layout: 'index',
             context: {
               slug: edge.node.fields.slug,
-              metadata: edge.node.internal.content,
-              content: edge.node.childPagesContent.internal.content
-            },
+            }
           })
         })
 
