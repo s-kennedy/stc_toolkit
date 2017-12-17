@@ -62,7 +62,6 @@ export default class AboutPage extends React.Component {
       <div className='about'>
         <Title text={this.state.pageData.title} updateTitle={this.updateTitle} />
         { contentComponents }
-        <Button onClick={this.saveChanges}>Save changes</Button>
       </div>
     )
   }

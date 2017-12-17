@@ -20,11 +20,6 @@ const styles = {
   logo: {
     width: '200px',
     marginBottom: '0'
-  },
-  navbarTitle: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: '1.4rem'
   }
 }
 
@@ -44,11 +39,11 @@ export default class Navigation extends React.Component {
   }
 
   renderSignInUp = () => {
-    return <Button color="primary" onClick={ this.props.auth.login }>Sign In / Sign Up</Button>
+    return <Button color="secondary" onClick={ this.props.auth.login }>Sign In / Sign Up</Button>
   }
 
   renderLogOut = () => {
-    return <Button color="primary" onClick={ this.props.auth.logout}>Sign out</Button>
+    return <Button color="secondary" onClick={ this.props.auth.logout}>Sign out</Button>
   }
 
   render() {

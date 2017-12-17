@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'gatsby-link';
-import DisplayTitle from '../components/DisplayTitle'
-import ContentGenerator from '../utils/ContentGenerator';
 import update from 'immutability-helper';
-import axios from 'axios';
+
+import DisplayTitle from '../components/DisplayTitle'
+import AdminToolbar from '../components/AdminToolbar';
+
+import ContentGenerator from '../utils/ContentGenerator';
+
 import { savePage } from '../utils/API';
 import { auth } from '../utils/init';
-// import bgImage from '../assets/img/home-header.jpg';
-
 import { Jumbotron, Button } from 'reactstrap';
 
 const styles = {
@@ -70,13 +71,13 @@ export default class HomePage extends React.Component {
     const contentComponents = ContentGenerator(content, this.updateContent);
     return (
       <div className='home'>
+        <AdminToolbar saveChanges={this.saveChanges} />
         <Jumbotron style={styles.jumbotron}>
           <DisplayTitle text={this.state.pageData.title} updateTitle={this.updateTitle} />
         </Jumbotron>
 
         { contentComponents }
 
-        <Button onClick={this.saveChanges}>Save changes</Button>
     </div>
     )
   }
