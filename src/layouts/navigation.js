@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
 import {
+  Button,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -32,7 +33,7 @@ export default class Navigation extends React.Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
   }
 
@@ -40,6 +41,14 @@ export default class Navigation extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  renderSignInUp = () => {
+    return <Button color="primary" onClick={ this.props.auth.login }>Sign In / Sign Up</Button>
+  }
+
+  renderLogOut = () => {
+    return <Button color="primary" onClick={ this.props.auth.logout}>Sign out</Button>
   }
 
   render() {
@@ -69,10 +78,7 @@ export default class Navigation extends React.Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <Link className='nav-link' to="/">Edit page</Link>
-              </NavItem>
-              <NavItem>
-                <Link className='nav-link' to="/">Log out</Link>
+                { this.props.isLoggedIn ? this.renderLogOut() : this.renderSignInUp() }
               </NavItem>
             </Nav>
           </Collapse>

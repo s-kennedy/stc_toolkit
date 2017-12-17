@@ -4,6 +4,8 @@ import DisplayTitle from '../components/DisplayTitle'
 import ContentGenerator from '../utils/ContentGenerator';
 import update from 'immutability-helper';
 import axios from 'axios';
+import { savePage } from '../utils/API';
+import { auth } from '../utils/init';
 // import bgImage from '../assets/img/home-header.jpg';
 
 import { Jumbotron, Button } from 'reactstrap';
@@ -28,36 +30,29 @@ export default class HomePage extends React.Component {
     console.log('props', this.props)
     this.state = {
       pageData: JSON.parse(this.props.data.pages.internal.content),
-      content: JSON.parse(this.props.data.pages.childPagesContent.internal.content)
+      content: JSON.parse(this.props.data.pages.childPagesContent.internal.content),
+      isLoggedIn: auth.loggedIn()
     }
     this.updateContent = (index, newContent) => this._updateContent(index, newContent)
     this.updateTitle = (newTitle) => this._updateTitle(newTitle)
     this.saveChanges = () => this._saveChanges();
+    this.token = auth.getToken();
   }
 
   _saveChanges() {
     const pageId = this.state.pageData.id;
-    const pageTitle = this.state.pageData.title;
-    console.log('this.state.pageData', this.state.pageData)
-    const url = `http://localhost:3000/pages/${pageId}`;
+
     const data = {
       page: {
         content: this.state.content,
-        title: pageTitle
+        title: this.state.pageData.title
       },
       id: pageId
     }
 
-    axios.put(url, data)
-     .then((res) => {
-      if (res.status === 200) {
-        console.log('Page saved!') // Trigger redeploy
-      } else {
-        console.log('There was an error saving your page')
-        console.log(res)
-      }
-     })
-     .catch((err) => console.log(err)) // Handle errors
+
+    console.log('this.token', this.token);
+    savePage(pageId, data, this.token);
   }
 
   _updateContent(index, content) {
