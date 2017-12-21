@@ -2,7 +2,7 @@ import { api } from './init'
 
 export function savePage(pageId, data, token){
   const url = `/pages/${pageId}`;
-  console.log('token in savePage', token)
+
   return api.put(url, data, { headers: { 'Authorization': 'Bearer ' + token } })
     .then((res) => {
       if (res.status === 200) {

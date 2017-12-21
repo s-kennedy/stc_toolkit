@@ -16,41 +16,38 @@ export default class AuthService {
       },
       theme: {
         logo: logo,
-        primaryColor: '#7FDBFF'
+        primaryColor: '#DA201C' // red
       },
       languageDictionary: {
         title: "Save the Children Child Sensitivity Toolkit"
       }
     })
-    // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
-    // binds login functions to keep this context
     this.login = this.login.bind(this)
   }
+
   _doAuthentication(authResult) {
-      // Saves the user token
       this.setToken(authResult.accessToken)
-      // navigate to the home route
       location.replace("/");
   }
+
   login() {
-    // Call the show method to display the widget.
     this.lock.show()
   }
+
   loggedIn() {
-    // Checks if there is a saved token and it's still valid
     return !!this.getToken()
   }
+
   setToken(accessToken) {
-    // Saves user token to local storage
     localStorage.setItem('access_token', accessToken)
   }
+
   getToken() {
-    // Retrieves the user token from local storage
     return localStorage.getItem('access_token')
   }
+
   logout() {
-    // Clear user token and profile data from local storage
     localStorage.removeItem('access_token');
     location.replace("/");
   }

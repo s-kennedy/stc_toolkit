@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
-import Navigation from './navigation';
+import NavigationContainer from '../containers/NavigationContainer';
 import { auth } from '../utils/init';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -32,7 +32,7 @@ export default class TemplateWrapper extends React.Component {
             { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
           ]}
         />
-        <Navigation isLoggedIn={ this.state.isLoggedIn } token={auth.getToken()} auth={auth} />
+        <NavigationContainer />
         <div>
           {this.props.children()}
         </div>
