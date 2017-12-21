@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
-import { toggleEditing, savePage } from '../state/actions'
+import { toggleEditing, savePage } from '../redux/actions'
 import AdminToolbar from '../components/AdminToolbar'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     isLoggedIn: state.isLoggedIn,
-    isEditingPage: state.isEditingPage
+    isEditingPage: state.isEditingPage,
+    content: state.content,
+    pageData: state.pageData
   }
 }
 

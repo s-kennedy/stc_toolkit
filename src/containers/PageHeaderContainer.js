@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePageTitle } from '../state/actions'
+import { updatePageTitle } from '../redux/actions'
 
 import PageHeader from '../components/PageHeader'
 

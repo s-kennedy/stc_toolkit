@@ -7,7 +7,6 @@ export default class AuthService {
     this.lock = new Auth0Lock(clientId, domain, {
       oidcConformant: true,
       auth: {
-        redirectUrl: `${window.location.origin}/`,
         responseType: 'token',
         audience: 'stc_toolkit_api',
         params: {
@@ -22,16 +21,16 @@ export default class AuthService {
         title: "Save the Children Child Sensitivity Toolkit"
       }
     })
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
+    this.setAuthenticatedCallback = this.setAuthenticatedCallback.bind(this)
     this.login = this.login.bind(this)
   }
 
-  _doAuthentication(authResult) {
-      this.setToken(authResult.accessToken)
-      location.replace("/");
+  setAuthenticatedCallback(callback) {
+    this.lock.on('authenticated', callback)
   }
 
   login() {
+    console.log('SHOW THE LOCK')
     this.lock.show()
   }
 
@@ -49,6 +48,5 @@ export default class AuthService {
 
   logout() {
     localStorage.removeItem('access_token');
-    location.replace("/");
   }
 }

@@ -8,6 +8,9 @@ import {
   Nav,
   NavItem } from 'reactstrap';
 
+import { savePage } from '../utils/API';
+import { auth } from '../utils/init';
+
 const styles = {
   toolbar: {
     backgroundColor: '#9A3324',
@@ -24,6 +27,8 @@ export default class AdminToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.token = auth.getToken();
+    this.savePageToDatabase = () => this._savePageToDatabase();
     this.state = {
       isOpen: false
     };
@@ -34,6 +39,22 @@ export default class AdminToolbar extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+
+  _savePageToDatabase () {
+    const pageId = this.props.pageData.id;
+
+    const data = {
+      page: {
+        content: this.props.content,
+        title: this.props.pageData.title
+      },
+      id: pageId
+    }
+
+    savePage(pageId, data, this.token);
+  }
+
 
 
   render() {
@@ -50,7 +71,7 @@ export default class AdminToolbar extends React.Component {
                   <Button color='white' onClick={this.props.onToggleEditing}>{editingText}</Button>
                 </NavItem>
                 <NavItem>
-                  { this.props.isEditingPage && <Button style={styles.saveBtn} onClick={this.props.saveChanges}>Save changes</Button> }
+                  { this.props.isEditingPage && <Button style={styles.saveBtn} onClick={this.savePageToDatabase}>Save changes</Button> }
                 </NavItem>
               </Nav>
             </Collapse>

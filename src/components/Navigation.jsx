@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
+import { logIn, logOut, doAuthentication } from '../redux/actions'
 import {
   Button,
   Collapse,
@@ -30,6 +31,7 @@ export default class Navigation extends React.Component {
     this.state = {
       isOpen: false,
     };
+    this.props.listenForAuthentication()
   }
 
   toggle() {

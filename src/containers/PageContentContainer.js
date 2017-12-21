@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePageContent } from '../state/actions'
+import { updatePageContent } from '../redux/actions'
 import PageContent from '../components/PageContent'
 
 const mapStateToProps = (state) => {

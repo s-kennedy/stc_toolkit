@@ -1,29 +1,14 @@
 import React from 'react';
 import Link from 'gatsby-link';
-import update from 'immutability-helper';
 
 import PageContentContainer from '../containers/PageContentContainer'
 import PageHeaderContainer from '../containers/PageHeaderContainer'
-import DisplayTitle from '../components/DisplayTitle'
-import ContentGenerator from '../utils/ContentGenerator';
 
 import { savePage } from '../utils/API';
 import { auth } from '../utils/init';
-import { Jumbotron, Button } from 'reactstrap';
 
 import { connect } from 'react-redux'
-import { updatePageContent, updatePageData, updatePageTitle } from '../state/actions'
-
-const styles = {
-  jumbotron: {
-    display: 'flex',
-    background: 'url(https://www.savethechildren.org.uk/content/dam/global/images/countries/syria/rescue-at-sea-vos-sc127177-orig.jpg.thumbimage.1536.1536.jpg) no-repeat center center',
-    backgroundSize: 'cover',
-    height: '60vh',
-    minHeight: '440px',
-    alignItems: 'center'
-  }
-}
+import { updatePageContent, updatePageData } from '../redux/actions'
 
 class HomePage extends React.Component {
   static propTypes = {};
