@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 import NavigationContainer from '../containers/NavigationContainer';
-import { auth } from '../utils/init';
+import AdminToolbarContainer from '../containers/AdminToolbarContainer';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -13,9 +13,6 @@ import '../assets/sass/custom.scss';
 export default class TemplateWrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoggedIn: auth.loggedIn(),
-    };
   }
 
   render() {
@@ -33,6 +30,7 @@ export default class TemplateWrapper extends React.Component {
           ]}
         />
         <NavigationContainer />
+        <AdminToolbarContainer />
         <div>
           {this.props.children()}
         </div>

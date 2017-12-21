@@ -2,9 +2,8 @@ import React from 'react';
 import Link from 'gatsby-link';
 import update from 'immutability-helper';
 
+import PageContentContainer from '../containers/PageContentContainer'
 import DisplayTitle from '../components/DisplayTitle'
-import AdminToolbar from '../components/AdminToolbar';
-
 import ContentGenerator from '../utils/ContentGenerator';
 
 import { savePage } from '../utils/API';
@@ -28,11 +27,9 @@ export default class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('props', this.props)
     this.state = {
       pageData: JSON.parse(this.props.data.pages.internal.content),
       content: JSON.parse(this.props.data.pages.childPagesContent.internal.content),
-      isLoggedIn: auth.loggedIn()
     }
     this.updateContent = (index, newContent) => this._updateContent(index, newContent)
     this.updateTitle = (newTitle) => this._updateTitle(newTitle)
@@ -51,8 +48,6 @@ export default class HomePage extends React.Component {
       id: pageId
     }
 
-
-    console.log('this.token', this.token);
     savePage(pageId, data, this.token);
   }
 
@@ -68,16 +63,12 @@ export default class HomePage extends React.Component {
 
   render() {
     const { content } = this.state;
-    const contentComponents = ContentGenerator(content, this.updateContent);
     return (
       <div className='home'>
-        <AdminToolbar saveChanges={this.saveChanges} />
         <Jumbotron style={styles.jumbotron}>
           <DisplayTitle text={this.state.pageData.title} updateTitle={this.updateTitle} />
         </Jumbotron>
-
-        { contentComponents }
-
+        <PageContentContainer content={content} />
     </div>
     )
   }

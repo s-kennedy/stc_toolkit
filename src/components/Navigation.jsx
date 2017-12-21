@@ -47,8 +47,6 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-
-    console.log(this.props)
     return (
       <div>
         <Navbar color="faded" light expand="md">

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'reactstrap';
+import editable from '../utils/editable'
 
 const styles = {
   title: {
@@ -62,8 +63,8 @@ class DisplayTitle extends React.Component {
           <span className="headline-holder" style={styles.headlineHolder}>{ text }</span>
         </h1>
         <div className="edit-action">
-            <Button onClick={this.toggleEditing}>Edit</Button>
-          </div>
+          <Button onClick={this.toggleEditing}>Edit</Button>
+        </div>
       </div>
     )
   }

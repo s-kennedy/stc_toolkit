@@ -1,8 +1,8 @@
 import { createStore as reduxCreateStore } from "redux"
-import { authentication } from './reducers'
+import { adminTools } from './reducers'
 
-const initialState = { isLoggedIn: false }
+const initialState = { isLoggedIn: false, isEditingPage: false }
 
-const createStore = () => reduxCreateStore(authentication, initialState)
+const createStore = () => reduxCreateStore(adminTools, initialState)
 
 export default createStore;
