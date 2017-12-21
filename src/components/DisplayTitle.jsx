@@ -60,7 +60,7 @@ class DisplayTitle extends React.Component {
     return (
       <div className='display-title edit-container'>
         <h1 className="display-3" style={styles.title}>
-          <span className="headline-holder" style={styles.headlineHolder}>{ text }</span>
+          <span className="headline-holder" style={styles.headlineHolder}>{ this.props.text }</span>
         </h1>
         <div className="edit-action">
           <Button onClick={this.toggleEditing}>Edit</Button>

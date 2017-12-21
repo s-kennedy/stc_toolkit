@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import { updatePageContent } from '../state/actions'
 import PageContent from '../components/PageContent'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    content: ownProps.content
+    content: state.content
   }
 }
 

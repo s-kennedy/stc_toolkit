@@ -6,10 +6,24 @@ export const adminTools = (state, action) => {
       return { ...state, isLoggedIn: false }
     case 'TOGGLE_EDITING':
       return { ...state, isEditingPage: !state.isEditingPage }
-    case 'UPATE_PAGE_CONTENT':
+    case 'UPDATE_PAGE_CONTENT':
       console.log('page content', action.content)
       return {
-        ...state
+        ...state,
+        content: action.content
+      }
+    case 'UPDATE_PAGE_DATA':
+      return {
+        ...state,
+        pageData: action.pageData
+      }
+    case 'UPDATE_PAGE_TITLE':
+      return {
+        ...state,
+        pageData: {
+          ...state.pageData,
+          title: action.title
+        }
       }
     case 'SAVE_PAGE':
       return {

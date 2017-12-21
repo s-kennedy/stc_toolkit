@@ -17,3 +17,11 @@ export function savePage(content) {
 export function updatePageContent(content) {
   return { type: 'UPDATE_PAGE_CONTENT', content }
 }
+
+export function updatePageData(pageData) {
+  return { type: 'UPDATE_PAGE_DATA', pageData }
+}
+
+export function updatePageTitle(title) {
+  return { type: 'UPDATE_PAGE_TITLE', title }
+}

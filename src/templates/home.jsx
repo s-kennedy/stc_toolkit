@@ -3,12 +3,16 @@ import Link from 'gatsby-link';
 import update from 'immutability-helper';
 
 import PageContentContainer from '../containers/PageContentContainer'
+import PageHeaderContainer from '../containers/PageHeaderContainer'
 import DisplayTitle from '../components/DisplayTitle'
 import ContentGenerator from '../utils/ContentGenerator';
 
 import { savePage } from '../utils/API';
 import { auth } from '../utils/init';
 import { Jumbotron, Button } from 'reactstrap';
+
+import { connect } from 'react-redux'
+import { updatePageContent, updatePageData, updatePageTitle } from '../state/actions'
 
 const styles = {
   jumbotron: {
@@ -21,29 +25,24 @@ const styles = {
   }
 }
 
-
-export default class HomePage extends React.Component {
+class HomePage extends React.Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-      pageData: JSON.parse(this.props.data.pages.internal.content),
-      content: JSON.parse(this.props.data.pages.childPagesContent.internal.content),
-    }
-    this.updateContent = (index, newContent) => this._updateContent(index, newContent)
-    this.updateTitle = (newTitle) => this._updateTitle(newTitle)
     this.saveChanges = () => this._saveChanges();
     this.token = auth.getToken();
+    this.props.onUpdatePageContent(JSON.parse(this.props.data.pages.childPagesContent.internal.content));
+    this.props.onUpdatePageData(JSON.parse(this.props.data.pages.internal.content))
   }
 
   _saveChanges() {
-    const pageId = this.state.pageData.id;
+    const pageId = this.props.pageData.id;
 
     const data = {
       page: {
-        content: this.state.content,
-        title: this.state.pageData.title
+        content: this.props.content,
+        title: this.props.pageData.title
       },
       id: pageId
     }
@@ -51,28 +50,35 @@ export default class HomePage extends React.Component {
     savePage(pageId, data, this.token);
   }
 
-  _updateContent(index, content) {
-    const newContent = update(this.state.content, { [index]: { $merge: content }})
-    this.setState({ content: newContent })
-  }
-
-  _updateTitle(newTitle) {
-    const newContent = update(this.state.pageData, { title: { $set: newTitle }})
-    this.setState({ pageData: newContent })
-  }
-
   render() {
-    const { content } = this.state;
     return (
       <div className='home'>
-        <Jumbotron style={styles.jumbotron}>
-          <DisplayTitle text={this.state.pageData.title} updateTitle={this.updateTitle} />
-        </Jumbotron>
-        <PageContentContainer content={content} />
-    </div>
+        <PageHeaderContainer />
+        <PageContentContainer />
+      </div>
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    content: state.content,
+    pageData: state.pageData
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onUpdatePageContent: (content) => {
+      dispatch(updatePageContent(content))
+    },
+    onUpdatePageData: (pageData) => {
+      dispatch(updatePageData(pageData))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
 
 
 export const query = graphql`
