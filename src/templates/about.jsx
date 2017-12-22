@@ -1,13 +1,13 @@
 import React from 'react';
 
 import PageContentContainer from '../containers/PageContentContainer'
-import PageHeaderContainer from '../containers/PageHeaderContainer'
+import PageTitleContainer from '../containers/PageTitleContainer'
 
 import { savePage } from '../utils/API';
 import { auth } from '../utils/init';
 
 import { connect } from 'react-redux'
-import { updatePageContent, updatePageData } from '../redux/actions'
+import { updatePageContent, updatePageMetaData } from '../redux/actions'
 
 class AboutPage extends React.Component {
   static propTypes = {};
@@ -17,7 +17,7 @@ class AboutPage extends React.Component {
     this.saveChanges = () => this._saveChanges();
     this.token = auth.getToken();
     this.props.onUpdatePageContent(JSON.parse(this.props.data.pages.childPagesContent.internal.content));
-    this.props.onUpdatePageData(JSON.parse(this.props.data.pages.internal.content))
+    this.props.onUpdatePageMetaData(JSON.parse(this.props.data.pages.internal.content))
   }
 
   _saveChanges() {
@@ -37,7 +37,7 @@ class AboutPage extends React.Component {
   render() {
     return (
       <div className='about'>
-        <PageHeaderContainer />
+        <PageTitleContainer />
         <PageContentContainer />
       </div>
     )
@@ -56,8 +56,8 @@ function mapDispatchToProps(dispatch) {
     onUpdatePageContent: (content) => {
       dispatch(updatePageContent(content))
     },
-    onUpdatePageData: (pageData) => {
-      dispatch(updatePageData(pageData))
+    onUpdatePageMetaData: (pageData) => {
+      dispatch(updatePageMetaData(pageData))
     }
   }
 }

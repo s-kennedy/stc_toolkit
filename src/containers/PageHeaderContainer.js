@@ -8,7 +8,7 @@ import { Jumbotron } from 'reactstrap';
 function mapStateToProps(state) {
   return {
     title: state.pageData.title,
-    isEditingPage: state.isEditingPage,
+    isEditingPage: state.adminTools.isEditingPage,
   }
 }
 

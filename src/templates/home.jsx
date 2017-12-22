@@ -7,7 +7,7 @@ import { savePage } from '../utils/API';
 import { auth } from '../utils/init';
 
 import { connect } from 'react-redux'
-import { updatePageContent, updatePageData } from '../redux/actions'
+import { updatePageContent, updatePageMetaData } from '../redux/actions'
 
 class HomePage extends React.Component {
   static propTypes = {};
@@ -17,7 +17,7 @@ class HomePage extends React.Component {
     this.saveChanges = () => this._saveChanges();
     this.token = auth.getToken();
     this.props.onUpdatePageContent(JSON.parse(this.props.data.pages.childPagesContent.internal.content));
-    this.props.onUpdatePageData(JSON.parse(this.props.data.pages.internal.content))
+    this.props.onUpdatePageMetaData(JSON.parse(this.props.data.pages.internal.content))
   }
 
   _saveChanges() {
@@ -35,6 +35,7 @@ class HomePage extends React.Component {
   }
 
   render() {
+    console.log('PAGE PROPS', this.props)
     return (
       <div className='home'>
         <PageHeaderContainer />
@@ -56,8 +57,8 @@ function mapDispatchToProps(dispatch) {
     onUpdatePageContent: (content) => {
       dispatch(updatePageContent(content))
     },
-    onUpdatePageData: (pageData) => {
-      dispatch(updatePageData(pageData))
+    onUpdatePageMetaData: (pageData) => {
+      dispatch(updatePageMetaData(pageData))
     }
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { map } from 'lodash'
 
 import Header from '../components/display/Header'
 import Paragraph from '../components/display/Paragraph'
@@ -8,8 +9,8 @@ import CustomButton from '../components/display/CustomButton'
 import CallToActionContainer from '../containers/CallToActionContainer'
 import SectionContainer from '../containers/SectionContainer'
 
-const generateContentComponents = (contentJson) => {
-  return contentJson.map((obj, index) => {
+const generateContentComponents = (contentJson=[]) => {
+  return map(contentJson, (obj, index) => {
     switch (obj.type) {
       case 'section':
       return <SectionContainer key={index} content={obj.content} />

@@ -16,7 +16,7 @@ class Paragraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, text: this.props.text }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
     this.doneEditing = (text) => this._doneEditing(text);
   }
@@ -27,23 +27,19 @@ class Paragraph extends React.Component {
 
   _doneEditing(text) {
     this.toggleEditing();
-    this.setState({ text })
-    // this.props.updateContent(this.props.index, { text })
-    console.log(text)
+    this.props.updateContent(this.props.sectionIndex, this.props.index, { text })
   }
 
   render() {
     if (this.state.editing) {
-      const { editorState } = this.state;
-
       return (
-        <RichTextEditor doneEditing={this.doneEditing} text={this.state.text} />
+        <RichTextEditor doneEditing={this.doneEditing} text={this.props.text} />
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayParagraph text={this.state.text} />
+        <DisplayParagraph text={this.props.text} />
       </Editable>
     )
   }

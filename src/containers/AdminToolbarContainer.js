@@ -3,10 +3,10 @@ import { toggleEditing, savePage } from '../redux/actions'
 import AdminToolbar from '../components/AdminToolbar'
 
 const mapStateToProps = (state, ownProps) => {
-  const allowEditing = state.userRoles && state.userRoles.includes('Editor')
+  const allowEditing = state.adminTools.userRoles && state.adminTools.userRoles.includes('Editor')
   return {
-    isLoggedIn: state.isLoggedIn,
-    isEditingPage: state.isEditingPage,
+    isLoggedIn: state.adminTools.isLoggedIn,
+    isEditingPage: state.adminTools.isEditingPage,
     content: state.content,
     pageData: state.pageData,
     allowEditing: allowEditing
@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggleEditing: () => {
       dispatch(toggleEditing())
     },
-    onSavePage: (content) => {
-      dispatch(savePage(content))
+    savePage: (pageData, content) => {
+      dispatch(savePage(pageData, content))
     }
   }
 }

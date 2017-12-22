@@ -1,17 +1,16 @@
 import { api } from './init'
 
-export function savePage(pageId, data, token){
+export function savePage(pageId, data, token, onSuccess, onFail){
   const url = `/pages/${pageId}`;
 
   return api.put(url, data, { headers: { 'Authorization': 'Bearer ' + token } })
     .then((res) => {
       if (res.status === 200) {
-        console.log('Page saved!') // Trigger redeploy
+        onSuccess(res.data)
         console.log(res.data)
       } else {
-        console.log('There was an error saving your page')
-        console.log(res)
+        onFail(res)
       }
     })
-   .catch((err) => console.log(err)) // Handle errors
+   .catch((err) => onFail(err)) // Handle errors
 }

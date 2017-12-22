@@ -20,24 +20,18 @@ class TitleWithHolder extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, text: this.props.text }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
-    this.handleEditorChange = (event) => this._handleEditorChange(event)
-    this.doneEditing = () => this._doneEditing();
+    this.doneEditing = (text) => this._doneEditing(text);
   }
 
   _toggleEditing() {
     this.setState({ editing: !this.state.editing })
   }
 
-  _handleEditorChange (event) {
-    const text = event.currentTarget.value;
-    this.setState({ text });
-  };
-
-  _doneEditing() {
+  _doneEditing(text) {
     this.toggleEditing();
-    this.props.updateTitle(this.state.text)
+    this.props.updateTitle(text)
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { updatePageContent } from '../redux/actions'
+import { updateSectionContent } from '../redux/actions'
 import InnerContentContainer from '../containers/InnerContentContainer';
 import EditableInnerContentContainer from '../containers/EditableInnerContentContainer';
 
@@ -14,14 +14,14 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    isEditingPage: state.isEditingPage,
+    isEditingPage: state.adminTools.isEditingPage,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdatePageContent: (content) => {
-      dispatch(updatePageContent(content))
+    onUpdateSectionContent: (sectionIndex, contentIndex, newContent) => {
+      dispatch(updateSectionContent(sectionIndex, contentIndex, newContent))
     }
   }
 }
@@ -32,7 +32,11 @@ const SectionContainer = (props) => {
         <div style={styles.container} className='container col-xs-12 col-sm-8'>
         {
           props.isEditingPage ?
-          <EditableInnerContentContainer content={props.content} onUpdate={props.onUpdatePageContent} /> :
+          <EditableInnerContentContainer
+            sectionIndex={props.index}
+            content={props.content}
+            onUpdate={props.onUpdateSectionContent}
+          /> :
           <InnerContentContainer content={props.content} />
         }
         </div>

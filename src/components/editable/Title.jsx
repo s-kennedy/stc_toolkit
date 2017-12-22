@@ -5,17 +5,6 @@ import DisplayTitle from '../display/Title';
 import PlainTextEditor from '../editingTools/PlainTextEditor'
 
 
-const styles = {
-  titleContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '2rem',
-  },
-  title: {
-    borderBottom: '2px solid #DA291C'
-  }
-}
-
 class Title extends React.Component {
   static propTypes = {};
 
@@ -24,7 +13,7 @@ class Title extends React.Component {
     this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
     this.handleEditorChange = (event) => this._handleEditorChange(event)
-    this.doneEditing = () => this._doneEditing();
+    this.doneEditing = (text) => this._doneEditing(text);
   }
 
   _toggleEditing() {
@@ -36,19 +25,17 @@ class Title extends React.Component {
     this.setState({ text });
   };
 
-  _doneEditing() {
+  _doneEditing(text) {
     this.toggleEditing();
-    this.props.updateTitle({ text: this.state.text })
+    this.props.updateTitle(text)
   }
 
   render() {
     if (this.state.editing) {
       return (
-        <div className='title-container' style={styles.titleContainer}>
-          <h2>
-            <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
-          </h2>
-        </div>
+        <h2>
+          <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
+        </h2>
       )
     }
 

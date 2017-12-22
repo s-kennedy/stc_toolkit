@@ -22,7 +22,6 @@ const styles = {
   }
 }
 
-
 export default class AdminToolbar extends React.Component {
   constructor(props) {
     super(props);
@@ -40,22 +39,9 @@ export default class AdminToolbar extends React.Component {
     });
   }
 
-
   _savePageToDatabase () {
-    const pageId = this.props.pageData.id;
-
-    const data = {
-      page: {
-        content: this.props.content,
-        title: this.props.pageData.title
-      },
-      id: pageId
-    }
-
-    savePage(pageId, data, this.token);
+    this.props.savePage(this.props.pageData, this.props.content)
   }
-
-
 
   render() {
 

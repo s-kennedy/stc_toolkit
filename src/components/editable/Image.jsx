@@ -20,8 +20,7 @@ class Image extends React.Component {
 
   _doneEditing(updatedContent) {
     this.toggleEditing();
-    // this.props.updateContent(this.props.index, updatedContent)
-    console.log(updatedContent)
+    this.props.updateContent(this.props.sectionIndex, this.props.index, updatedContent)
   }
 
   render() {
