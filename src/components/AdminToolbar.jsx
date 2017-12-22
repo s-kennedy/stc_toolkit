@@ -59,7 +59,7 @@ export default class AdminToolbar extends React.Component {
 
   render() {
 
-    if (this.props.isLoggedIn) {
+    if (this.props.isLoggedIn && this.props.allowEditing) {
       const editingText = this.props.isEditingPage ? 'Cancel' : 'Edit this page';
       return (
         <div>

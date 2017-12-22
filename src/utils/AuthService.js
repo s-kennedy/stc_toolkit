@@ -49,4 +49,16 @@ export default class AuthService {
   logout() {
     localStorage.removeItem('access_token');
   }
+
+  decodeToken() {
+    const token = localStorage.getItem('access_token')
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  }
+
+  rolesFromToken() {
+    const decodedToken = this.decodeToken();
+    return decodedToken['https://savethechildren.net/roles'];
+  }
 }

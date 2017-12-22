@@ -3,7 +3,7 @@ export const adminTools = (state, action) => {
     case 'SHOW_LOCK':
       return { ...state, showingLock: true }
     case 'LOCK_SUCCESS':
-      return { ...state, showingLock: false, isLoggedIn: true }
+      return { ...state, showingLock: false, isLoggedIn: true, userRoles: action.userRoles }
     case 'LOCK_FAILURE':
       return { ...state, showingLock: false, isLoggedIn: false, error: action.err }
     case 'LOG_OUT_SUCCESS':

@@ -4,8 +4,8 @@ export function showLock() {
   return { type: 'SHOW_LOCK' }
 }
 
-export function lockSuccess() {
-  return { type: 'LOCK_SUCCESS' }
+export function lockSuccess(userRoles) {
+  return { type: 'LOCK_SUCCESS', userRoles }
 }
 
 export function loginFailure(err) {
@@ -25,7 +25,8 @@ export function doAuthentication() {
     auth.setAuthenticatedCallback((authResult) => {
       if (authResult.accessToken) {
         auth.setToken(authResult.accessToken);
-        return dispatch(lockSuccess())
+        const roles = auth.rolesFromToken();
+        return dispatch(lockSuccess(roles))
       } else {
         return dispatch(lockError())
       }
