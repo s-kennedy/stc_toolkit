@@ -30,28 +30,33 @@ export default class AuthService {
   }
 
   login() {
-    console.log('SHOW THE LOCK')
     this.lock.show()
   }
 
   loggedIn() {
-    return !!this.getToken()
+    const token = this.getToken();
+    if (!token) { return false }
+
+    const decodedToken = this.decodeToken();
+    const expiry = decodedToken.exp;
+    const currentTimestamp = Math.round(+new Date / 1e3);
+    return expiry >= currentTimestamp;
   }
 
   setToken(accessToken) {
-    localStorage.setItem('access_token', accessToken)
+    localStorage.setItem('stc_toolkit_access_token', accessToken)
   }
 
   getToken() {
-    return localStorage.getItem('access_token')
+    return localStorage.getItem('stc_toolkit_access_token')
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('stc_toolkit_access_token');
   }
 
   decodeToken() {
-    const token = localStorage.getItem('access_token')
+    const token = localStorage.getItem('stc_toolkit_access_token')
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));

@@ -14,7 +14,6 @@ export function loginFailure(err) {
 
 export function logIn() {
   return dispatch => {
-    console.log('START LOGIN!')
     auth.login();
     dispatch(showLock())
   }
@@ -31,6 +30,17 @@ export function doAuthentication() {
         return dispatch(lockError())
       }
     })
+  }
+}
+
+export function checkAuthentication() {
+  return dispatch => {
+    const isLoggedIn = auth.loggedIn();
+
+    if (isLoggedIn) {
+      const roles = auth.rolesFromToken();
+      return dispatch(lockSuccess(roles))
+    }
   }
 }
 

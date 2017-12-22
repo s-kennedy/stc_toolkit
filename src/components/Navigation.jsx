@@ -31,6 +31,7 @@ export default class Navigation extends React.Component {
     this.state = {
       isOpen: false,
     };
+    this.props.checkPreviousAuthentication()
     this.props.listenForAuthentication()
   }
 
