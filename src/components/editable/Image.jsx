@@ -1,6 +1,8 @@
 import React from 'react'
 import ImageUploader from 'react-images-upload';
 import { Button } from 'reactstrap';
+import Editable from './Editable';
+import DisplayImage from '../display/Image';
 
 
 class Image extends React.Component {
@@ -59,13 +61,9 @@ class Image extends React.Component {
     }
 
     return (
-      <div className='img edit-container'>
-        <img src={image} alt={caption} />
-        <small>{caption}</small>
-        <div className="edit-action">
-          <Button onClick={this.toggleEditing}>Edit</Button>
-        </div>
-      </div>
+      <Editable toggleEditing={this.toggleEditing}>
+        <DisplayImage source={image} caption={caption} />
+      </Editable>
     )
   }
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'gatsby-link';
 
 import PageContentContainer from '../containers/PageContentContainer'
 import PageHeaderContainer from '../containers/PageHeaderContainer'

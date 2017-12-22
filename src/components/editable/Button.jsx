@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap';
 import Link from 'gatsby-link';
+import CustomButton from '../display/CustomButton'
 
 class STCButton extends React.Component {
   static propTypes = {};
@@ -53,9 +54,7 @@ class STCButton extends React.Component {
     }
 
     return (
-      <Button className="stc-btn">
-        <Link to={ link }>{ anchor }</Link>
-      </Button>
+      <CustomButton link={link} anchor={anchor} />
     )
   }
 };

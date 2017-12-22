@@ -4,8 +4,10 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js';
 import { Button } from 'reactstrap';
+import DisplayParagraph from '../display/Paragraph'
+import Editable from './Editable'
 
-import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
 class Paragraph extends React.Component {
@@ -46,7 +48,6 @@ class Paragraph extends React.Component {
   _doneEditing() {
     this.toggleEditing();
     const contentToUpdate = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
-    console.log('contentToUpdate', contentToUpdate)
     this.setState({ text: contentToUpdate })
     this.props.updateContent(this.props.index, { text: contentToUpdate })
   }
@@ -66,12 +67,9 @@ class Paragraph extends React.Component {
     }
 
     return (
-      <div className='para edit-container'>
-        <div dangerouslySetInnerHTML={ {__html: this.state.text} } />
-        <div className="edit-action">
-          <Button onClick={this.toggleEditing}>Edit</Button>
-        </div>
-      </div>
+      <Editable toggleEditing={this.toggleEditing}>
+        <DisplayParagraph text={this.state.text} />
+      </Editable>
     )
   }
 };

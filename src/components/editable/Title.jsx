@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap';
+import Editable from './Editable';
+import DisplayTitle from '../display/Title';
 
 
 const styles = {
@@ -60,14 +62,9 @@ class Title extends React.Component {
     }
 
     return (
-      <div className='title-container' style={styles.titleContainer}>
-        <div className='title edit-container' style={styles.title}>
-          <h2>{ text }</h2>
-          <div className="edit-action">
-            <Button onClick={this.toggleEditing}>Edit</Button>
-          </div>
-        </div>
-      </div>
+      <Editable toggleEditing={this.toggleEditing}>
+        <DisplayTitle text={text} />
+      </Editable>
     )
   }
 };

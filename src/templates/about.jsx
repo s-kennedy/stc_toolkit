@@ -1,71 +1,68 @@
 import React from 'react';
-import Link from 'gatsby-link';
-import Title from '../components/Title'
-import ContentGenerator from '../utils/ContentGenerator';
-import update from 'immutability-helper';
-import axios from 'axios';
 
-import { Button } from 'reactstrap';
+import PageContentContainer from '../containers/PageContentContainer'
+import PageHeaderContainer from '../containers/PageHeaderContainer'
 
+import { savePage } from '../utils/API';
+import { auth } from '../utils/init';
 
-export default class AboutPage extends React.Component {
+import { connect } from 'react-redux'
+import { updatePageContent, updatePageData } from '../redux/actions'
+
+class AboutPage extends React.Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-      pageData: JSON.parse(this.props.data.pages.internal.content),
-      content: JSON.parse(this.props.data.pages.childPagesContent.internal.content)
-    }
-    this.updateContent = (index, newContent) => this._updateContent(index, newContent)
-    this.updateTitle = (newTitle) => this._updateTitle(newTitle)
     this.saveChanges = () => this._saveChanges();
+    this.token = auth.getToken();
+    this.props.onUpdatePageContent(JSON.parse(this.props.data.pages.childPagesContent.internal.content));
+    this.props.onUpdatePageData(JSON.parse(this.props.data.pages.internal.content))
   }
 
   _saveChanges() {
-    const pageId = this.state.pageData.id;
-    const url = `http://localhost:3000/pages/${pageId}`;
+    const pageId = this.props.pageData.id;
+
     const data = {
       page: {
-        content: this.state.content
+        content: this.props.content,
+        title: this.props.pageData.title
       },
       id: pageId
     }
 
-    axios.put(url, data)
-     .then((res) => {
-      if (res.status === 200) {
-        console.log('Page saved!') // Trigger redeploy
-      } else {
-        console.log('There was an error saving your page')
-        console.log(res)
-      }
-     })
-     .catch((err) => console.log(err)) // Handle errors
-  }
-
-  _updateContent(index, section) {
-    const newContent = update(this.state.content, { [index]: { $merge: section }})
-    this.setState({ content: newContent })
-  }
-
-  _updateTitle(newTitle) {
-    const newContent = update(this.state.pageData, { title: { $set: newTitle }})
-    this.setState({ pageData: newContent })
+    savePage(pageId, data, this.token);
   }
 
   render() {
-    const { content } = this.state;
-    const contentComponents = ContentGenerator(content, this.updateContent);
-    console.log('content', content)
     return (
       <div className='about'>
-        <Title text={this.state.pageData.title} updateTitle={this.updateTitle} />
-        { contentComponents }
+        <PageHeaderContainer />
+        <PageContentContainer />
       </div>
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    content: state.content,
+    pageData: state.pageData
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onUpdatePageContent: (content) => {
+      dispatch(updatePageContent(content))
+    },
+    onUpdatePageData: (pageData) => {
+      dispatch(updatePageData(pageData))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AboutPage)
 
 
 export const query = graphql`

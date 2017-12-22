@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap';
-import editable from '../utils/editable'
+import Editable from './Editable';
+import DisplayTitleWithHolder from '../display/TitleWithHolder';
 
 const styles = {
   title: {
@@ -13,7 +14,7 @@ const styles = {
   }
 }
 
-class DisplayTitle extends React.Component {
+class TitleWithHolder extends React.Component {
   static propTypes = {};
 
   constructor(props) {
@@ -58,16 +59,11 @@ class DisplayTitle extends React.Component {
     }
 
     return (
-      <div className='display-title edit-container'>
-        <h1 className="display-3" style={styles.title}>
-          <span className="headline-holder" style={styles.headlineHolder}>{ this.props.text }</span>
-        </h1>
-        <div className="edit-action">
-          <Button onClick={this.toggleEditing}>Edit</Button>
-        </div>
-      </div>
+      <Editable toggleEditing={this.toggleEditing}>
+        <DisplayTitleWithHolder text={this.props.text} />
+      </Editable>
     )
   }
 };
 
-export default DisplayTitle;
+export default TitleWithHolder;

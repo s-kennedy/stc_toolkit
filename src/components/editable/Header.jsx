@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap';
+import DisplayHeader from '../display/Header'
+import Editable from './Editable'
 
 const styles = {
   header: {
@@ -54,14 +56,9 @@ class Header extends React.Component {
     }
 
     return (
-      <div className='header'>
-        <div className="edit-container">
-          <h3>{ text }</h3>
-          <div className="edit-action">
-            <Button onClick={this.toggleEditing}>Edit</Button>
-          </div>
-        </div>
-      </div>
+      <Editable toggleEditing={this.toggleEditing}>
+        <DisplayHeader text={text} />
+      </Editable>
     )
   }
 };
