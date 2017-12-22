@@ -3,14 +3,13 @@ import FontAwesome from 'react-fontawesome';
 
 const styles = {
   editContainer: {
-    backgroundColor: 'rgba(0,156,166,0.1)', // teal
     position: 'relative',
   },
-  editIcon: {
+  saveIcon: {
     position: 'absolute',
     left: '-15px',
     top: '-15px',
-    background: '#009CA6', // teal
+    background: '#F2A900', // mustard
     color: 'white',
     height: '30px',
     width: '30px',
@@ -19,19 +18,21 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: '1',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: '18px'
   }
 }
 
-const Editable = (props) => {
+const EditorWrapper = (props) => {
   return (
-    <div className='edit-container' style={styles.editContainer}>
-      <div className='edit-icon' style={styles.editIcon} onClick={props.toggleEditing}>
-        <FontAwesome name='pencil' />
+    <div className='edit-container'>
+      <div className='save-icon' style={styles.saveIcon} onClick={props.handleDoneEditing}>
+        <FontAwesome name='check' />
       </div>
-      {props.children}
+      { props.children }
     </div>
   )
+
 }
 
-export default Editable;
+export default EditorWrapper;

@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'reactstrap';
 import Editable from './Editable';
 import DisplayTitleWithHolder from '../display/TitleWithHolder';
+import PlainTextEditor from '../editingTools/PlainTextEditor'
 
 const styles = {
   title: {
@@ -40,20 +41,12 @@ class TitleWithHolder extends React.Component {
   }
 
   render() {
-    const { text } = this.state;
-
     if (this.state.editing) {
       return (
         <div className='display-title edit-container'>
           <h1 className="display-3">
-            <input
-              value={ text }
-              onChange={this.handleEditorChange}
-            />
+            <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
           </h1>
-          <div className="edit-action">
-            <Button onClick={this.doneEditing}>Done</Button>
-          </div>
         </div>
       )
     }

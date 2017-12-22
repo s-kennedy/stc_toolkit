@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'reactstrap';
 import Editable from './Editable';
 import DisplayTitle from '../display/Title';
+import PlainTextEditor from '../editingTools/PlainTextEditor'
 
 
 const styles = {
@@ -20,7 +21,7 @@ class Title extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, text: this.props.text }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
     this.handleEditorChange = (event) => this._handleEditorChange(event)
     this.doneEditing = () => this._doneEditing();
@@ -41,29 +42,19 @@ class Title extends React.Component {
   }
 
   render() {
-    const { text } = this.state;
-
     if (this.state.editing) {
       return (
         <div className='title-container' style={styles.titleContainer}>
-          <div className='title edit-container' style={styles.title}>
-            <h2>
-              <input
-                value={ text }
-                onChange={this.handleEditorChange}
-              />
-            </h2>
-            <div className="edit-action">
-              <Button onClick={this.doneEditing}>Done</Button>
-            </div>
-          </div>
+          <h2>
+            <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
+          </h2>
         </div>
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayTitle text={text} />
+        <DisplayTitle text={this.props.text} />
       </Editable>
     )
   }

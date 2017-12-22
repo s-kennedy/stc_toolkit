@@ -1,8 +1,7 @@
 import React from 'react'
-import ImageUploader from 'react-images-upload';
-import { Button } from 'reactstrap';
 import Editable from './Editable';
 import DisplayImage from '../display/Image';
+import ImageEditor from '../editingTools/ImageEditor';
 
 
 class Image extends React.Component {
@@ -10,59 +9,32 @@ class Image extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, image: this.props.source, caption: this.props.caption }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
-    this.handleImageChange = (image) => this._handleImageChange(image)
-    this.handleCaptionChange = (val) => this._handleCaptionChange(val)
-    this.doneEditing = () => this._doneEditing();
+    this.doneEditing = (data) => this._doneEditing(data);
   }
 
   _toggleEditing() {
     this.setState({ editing: !this.state.editing })
   }
 
-  _doneEditing() {
+  _doneEditing(updatedContent) {
     this.toggleEditing();
-    this.props.updateContent(this.props.index, { caption: this.state.caption, source: this.state.image })
-  }
-
-  _handleCaptionChange(event) {
-    const caption = event.currentTarget.value;
-    this.setState({ caption })
-  }
-
-  _handleImageChange(image) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({ image: reader.result })
-    }
-    reader.readAsDataURL(image[0]);
+    // this.props.updateContent(this.props.index, updatedContent)
+    console.log(updatedContent)
   }
 
   render() {
-    const { caption, image, editing } = this.state;
 
-    if (editing) {
+    if (this.state.editing) {
       return (
-        <div className='edit-container'>
-          <ImageUploader
-            withIcon={true}
-            withPreview={true}
-            buttonText='Choose an image'
-            imgExtension={['.jpg', '.gif', '.png']}
-            onChange={this.handleImageChange}
-          />
-          <input value={caption} onChange={this.handleCaptionChange} />
-          <div className="edit-action">
-            <Button onClick={this.doneEditing}>Done</Button>
-          </div>
-        </div>
+        <ImageEditor source={this.props.source} caption={this.props.caption} doneEditing={this.doneEditing} />
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayImage source={image} caption={caption} />
+        <DisplayImage source={this.props.source} caption={this.props.caption} />
       </Editable>
     )
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'reactstrap';
 import DisplayHeader from '../display/Header'
 import Editable from './Editable'
+import PlainTextEditor from '../editingTools/PlainTextEditor'
 
 const styles = {
   header: {
@@ -14,10 +15,10 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, text: this.props.text }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
     this.handleEditorChange = (event) => this._handleEditorChange(event)
-    this.doneEditing = () => this._doneEditing();
+    this.doneEditing = (text) => this._doneEditing(text);
   }
 
   _toggleEditing() {
@@ -29,35 +30,25 @@ class Header extends React.Component {
     this.setState({ text });
   };
 
-  _doneEditing() {
+  _doneEditing(text) {
     this.toggleEditing();
-    this.props.updateContent(this.props.index, { text: this.state.text })
+    // this.props.updateContent(this.props.index, { text })
   }
 
   render() {
-    const { text } = this.state;
-
     if (this.state.editing) {
       return (
         <div className='header' style={styles.header}>
-          <div className="edit-container">
-            <h3>
-              <input
-                value={ text }
-                onChange={this.handleEditorChange}
-              />
-            </h3>
-            <div className="edit-action">
-              <Button onClick={this.doneEditing}>Done</Button>
-            </div>
-          </div>
+          <h3>
+            <PlainTextEditor doneEditing={this.doneEditing} text={this.props.text} />
+          </h3>
         </div>
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayHeader text={text} />
+        <DisplayHeader text={this.props.text} />
       </Editable>
     )
   }

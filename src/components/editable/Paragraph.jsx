@@ -6,6 +6,7 @@ import { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-j
 import { Button } from 'reactstrap';
 import DisplayParagraph from '../display/Paragraph'
 import Editable from './Editable'
+import RichTextEditor from '../editingTools/RichTextEditor'
 
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -17,39 +18,18 @@ class Paragraph extends React.Component {
     super(props);
     this.state = { editing: false, text: this.props.text }
     this.toggleEditing = () => this._toggleEditing()
-    this.initializeEditorState = () => this._initializeEditorState();
-    this.handleEditorStateChange = (state) => this._handleEditorStateChange(state)
-    this.doneEditing = () => this._doneEditing();
-  }
-
-  componentDidMount() {
-    this.initializeEditorState();
-  }
-
-  _initializeEditorState() {
-    const blocksFromHtml = htmlToDraft(this.props.text);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const editorState = EditorState.createWithContent(contentState);
-
-    this.setState({ editorState });
+    this.doneEditing = (text) => this._doneEditing(text);
   }
 
   _toggleEditing() {
     this.setState({ editing: !this.state.editing })
   }
 
-  _handleEditorStateChange(editorState) {
-    this.setState({
-      editorState,
-    });
-  };
-
-  _doneEditing() {
+  _doneEditing(text) {
     this.toggleEditing();
-    const contentToUpdate = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
-    this.setState({ text: contentToUpdate })
-    this.props.updateContent(this.props.index, { text: contentToUpdate })
+    this.setState({ text })
+    // this.props.updateContent(this.props.index, { text })
+    console.log(text)
   }
 
   render() {
@@ -57,12 +37,7 @@ class Paragraph extends React.Component {
       const { editorState } = this.state;
 
       return (
-        <div className="para edit-container">
-          <Editor editorState={editorState} onEditorStateChange={this.handleEditorStateChange} />
-          <div className="edit-action">
-            <Button onClick={this.doneEditing}>Done</Button>
-          </div>
-        </div>
+        <RichTextEditor doneEditing={this.doneEditing} text={this.state.text} />
       )
     }
 
