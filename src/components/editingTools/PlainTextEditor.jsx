@@ -4,6 +4,9 @@ import EditorWrapper from './EditorWrapper';
 const styles = {
   header: {
     display: 'flex'
+  },
+  input: {
+    width: '100%'
   }
 }
 
@@ -32,6 +35,7 @@ class PlainTextEditor extends React.Component {
     return (
       <EditorWrapper handleDoneEditing={this.handleDoneEditing}>
         <input
+          style={styles.input}
           value={ text }
           onChange={this.handleEditorChange}
         />

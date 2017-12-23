@@ -61,6 +61,11 @@ export const content = (state={}, action) => {
           }
         }
       }
+    case 'DUPLICATE_SECTION':
+      const newSection = Object.assign({}, state[action.sectionIndex])
+      const stateArr = Object.values(state)
+      stateArr.splice(action.sectionIndex, 0, newSection)
+      return stateArr
     default:
       return state
   }

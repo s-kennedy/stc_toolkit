@@ -17,7 +17,8 @@ exports.sourceNodes = ({ boundActionCreators }, { resourceType }) => {
             id: resource.id,
             title: resource.title,
             slug: resource.slug,
-            template: resource.template
+            template: resource.template,
+            category: resource.page_type
           }
 
           const parentNode = {

@@ -6,10 +6,12 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 
   if (node.internal.type === `pages`) {
     const nodeContent = JSON.parse(node.internal.content);
-    const { template, slug } = nodeContent;
+    const { template, slug, title, category } = nodeContent;
 
     createNodeField({ node, name: 'template', value: template });
     createNodeField({ node, name: 'slug', value: slug });
+    createNodeField({ node, name: 'title', value: title });
+    createNodeField({ node, name: 'category', value: category });
   }
 }
 
@@ -29,6 +31,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 fields {
                   slug
                   template
+                  title
+                  category
                 }
                 childPagesContent {
                   internal {

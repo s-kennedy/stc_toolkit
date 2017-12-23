@@ -9,7 +9,7 @@ import { auth } from '../utils/init';
 import { connect } from 'react-redux'
 import { updatePageContent, updatePageMetaData } from '../redux/actions'
 
-class AboutPage extends React.Component {
+class ReferencePage extends React.Component {
   static propTypes = {};
 
   constructor(props) {
@@ -46,11 +46,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AboutPage)
+export default connect(mapStateToProps, mapDispatchToProps)(ReferencePage)
 
 
 export const query = graphql`
-  query AboutPageQuery($slug: String!) {
+  query ReferencePageQuery($slug: String!) {
     pages(fields: { slug: { eq: $slug } }) {
       internal {
         content

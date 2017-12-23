@@ -120,3 +120,7 @@ export function updateSectionContent(sectionIndex, contentIndex, newContent) {
   return { type: 'UPDATE_SECTION_CONTENT', sectionIndex, contentIndex, newContent }
 }
 
+export function duplicateSection(sectionIndex) {
+  return { type: 'DUPLICATE_SECTION', sectionIndex }
+}
+

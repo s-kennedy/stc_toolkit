@@ -3,11 +3,14 @@ import { map } from 'lodash'
 
 import Header from '../components/editable/Header'
 import Paragraph from '../components/editable/Paragraph'
+import Name from '../components/editable/Name'
 import Image from '../components/editable/Image'
 import Button from '../components/editable/Button'
+import FontAwesome from 'react-fontawesome';
 
 import CallToActionContainer from '../containers/CallToActionContainer'
 import SectionContainer from '../containers/SectionContainer'
+import ReferenceContainer from '../containers/ReferenceContainer'
 
 
 const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
@@ -31,6 +34,15 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           updateContent={onUpdate}
           content={obj.content}
         />);
+      case 'reference':
+      return (
+        <ReferenceContainer
+          key={index}
+          index={index}
+          sectionIndex={sectionIndex}
+          updateContent={onUpdate}
+          content={obj.content}
+        />);
       case 'header':
       return (
         <Header
@@ -43,6 +55,15 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
       case 'paragraph':
       return (
         <Paragraph
+          key={index}
+          index={index}
+          sectionIndex={sectionIndex}
+          updateContent={onUpdate}
+          text={obj.text}
+        />);
+      case 'name':
+      return (
+        <Name
           key={index}
           index={index}
           sectionIndex={sectionIndex}
@@ -77,9 +98,38 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
 
 
 const EditableInnerContentContainer = (props) => {
+  const styles = {
+    editIcon: {
+      position: 'absolute',
+      background: '#9A3324', // plum
+      color: 'white',
+      height: '30px',
+      width: '30px',
+      borderRadius: '30px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: '1',
+      cursor: 'pointer',
+      bottom: '-5px',
+      left: '50%',
+      transform: 'translateX(-20px)',
+    }
+  }
+
+  const handleDuplicate = () => {
+    props.onDuplicate(props.sectionIndex)
+  }
+
   return (
     <div>
       { generateContentComponents(props.content, props.sectionIndex, props.onUpdate) }
+      {
+        props.onDuplicate &&
+        <div className='edit-icon' style={styles.editIcon} onClick={handleDuplicate}>
+          <FontAwesome name='plus' />
+        </div>
+      }
     </div>
   );
 }

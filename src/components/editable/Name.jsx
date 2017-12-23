@@ -1,18 +1,16 @@
 import React from 'react'
 
-import Editable from './Editable';
-import DisplayTitle from '../display/Title';
+import DisplayName from '../display/Name'
+import Editable from './Editable'
 import PlainTextEditor from '../editingTools/PlainTextEditor'
 
-
-class Title extends React.Component {
+class Name extends React.Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
     this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
-    this.handleEditorChange = (event) => this._handleEditorChange(event)
     this.doneEditing = (text) => this._doneEditing(text);
   }
 
@@ -20,31 +18,24 @@ class Title extends React.Component {
     this.setState({ editing: !this.state.editing })
   }
 
-  _handleEditorChange (event) {
-    const text = event.currentTarget.value;
-    this.setState({ text });
-  };
-
   _doneEditing(text) {
     this.toggleEditing();
-    this.props.updateTitle(text)
+    this.props.updateContent(this.props.sectionIndex, this.props.index, { text })
   }
 
   render() {
     if (this.state.editing) {
       return (
-        <h2>
-          <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
-        </h2>
+        <PlainTextEditor doneEditing={this.doneEditing} text={this.props.text} />
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayTitle text={this.props.text} />
+        <DisplayName text={this.props.text} />
       </Editable>
     )
   }
 };
 
-export default Title;
+export default Name;

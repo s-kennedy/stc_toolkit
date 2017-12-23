@@ -4,6 +4,7 @@ import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 import NavigationContainer from '../containers/NavigationContainer';
 import AdminToolbarContainer from '../containers/AdminToolbarContainer';
+import Footer from '../components/display/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -31,11 +32,12 @@ export default class TemplateWrapper extends React.Component {
         >
           <script src="https://use.fontawesome.com/ab5e247e92.js"></script>
         </Helmet>
-        <NavigationContainer />
+        <NavigationContainer data={this.props.data.allPages.edges} />
         <AdminToolbarContainer />
         <div>
           {this.props.children()}
         </div>
+        <Footer />
       </div>
     )
   }
@@ -46,3 +48,19 @@ TemplateWrapper.propTypes = {
   children: PropTypes.func,
 }
 
+export const query = graphql`
+  query NavigationQuery {
+    allPages {
+      edges {
+        node {
+          fields {
+            slug
+            template
+            title
+            category
+          }
+        }
+      }
+    }
+  }
+`;

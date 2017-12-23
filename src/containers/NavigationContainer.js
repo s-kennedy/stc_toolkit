@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation'
 
 const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.adminTools.isLoggedIn
+    isLoggedIn: state.adminTools.isLoggedIn,
   }
 }
 

@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const PageContentContainer = (props) => {
     return (
-      <div className='home'>
+      <div>
       {
         props.isEditingPage ?
         <EditableInnerContentContainer content={props.content} onUpdate={props.onUpdatePageContent} /> :

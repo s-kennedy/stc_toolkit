@@ -24,8 +24,10 @@ section {
 }
 
 .home {
-  .container {
-    display: flex;
+  .section {
+    .inner-content {
+      display: flex;
+    }
 
     .header {
       display: flex;
@@ -38,9 +40,11 @@ section {
 }
 
 .about {
-  .container {
-    display: flex;
-    flex-direction: column;
+  .section {
+    .inner-content {
+      display: flex;
+      flex-direction: column;
+    }
 
     .header {
       display: flex;
@@ -68,6 +72,10 @@ section.call-to-action {
     font-size: 3rem;
     color: white;
     padding: 1rem;
+  }
+
+  .inner-content {
+    text-align: center;
   }
 
   button.stc-btn {

@@ -5,25 +5,31 @@ import Header from '../components/display/Header'
 import Paragraph from '../components/display/Paragraph'
 import Image from '../components/display/Image'
 import CustomButton from '../components/display/CustomButton'
+import Name from '../components/display/Name'
 
 import CallToActionContainer from '../containers/CallToActionContainer'
 import SectionContainer from '../containers/SectionContainer'
+import ReferenceContainer from '../containers/ReferenceContainer'
 
 const generateContentComponents = (contentJson=[]) => {
   return map(contentJson, (obj, index) => {
     switch (obj.type) {
       case 'section':
-      return <SectionContainer key={index} content={obj.content} />
+        return <SectionContainer key={index} content={obj.content} />
       case 'call_to_action':
-      return <CallToActionContainer key={index} content={obj.content} />
+        return <CallToActionContainer key={index} content={obj.content} />
+      case 'reference':
+        return <ReferenceContainer key={index} content={obj.content} />
       case 'header':
-      return <Header key={index} text={obj.text} />;
+        return <Header key={index} text={obj.text} />;
       case 'paragraph':
-      return <Paragraph key={index} text={obj.text} />;
+        return <Paragraph key={index} text={obj.text} />;
       case 'image':
-      return <Image key={index} source={obj.source} caption={obj.caption} />
+        return <Image key={index} source={obj.source} caption={obj.caption} />
       case 'button':
-      return <CustomButton key={index} anchor={obj.anchor} link={obj.link} />
+        return <CustomButton key={index} anchor={obj.anchor} link={obj.link} />
+      case 'name':
+        return <Name key={index} text={obj.text} />
     }
   })
 }
@@ -31,7 +37,7 @@ const generateContentComponents = (contentJson=[]) => {
 
 const InnerContentContainer = (props) => {
     return (
-      <div>
+      <div className="inner-content">
         { generateContentComponents(props.content) }
       </div>
     );

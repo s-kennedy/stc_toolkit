@@ -29,9 +29,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const SectionContainer = (props) => {
+const ReferenceContainer = (props) => {
     return (
-      <section className={`section ${props.classes}`}>
+      <section className={`reference ${props.classes}`}>
         <div style={styles.container} className='container col-xs-12 col-sm-8'>
         {
           props.isEditingPage ?
@@ -48,4 +48,4 @@ const SectionContainer = (props) => {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ReferenceContainer);
