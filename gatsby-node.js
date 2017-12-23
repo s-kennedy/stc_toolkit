@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   const { createNodeField } = boundActionCreators
@@ -62,3 +63,4 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
   })
 };
+
