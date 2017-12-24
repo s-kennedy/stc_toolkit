@@ -124,3 +124,7 @@ export function duplicateSection(sectionIndex) {
   return { type: 'DUPLICATE_SECTION', sectionIndex }
 }
 
+export function deleteSection(sectionIndex) {
+  return { type: 'DELETE_SECTION', sectionIndex }
+}
+

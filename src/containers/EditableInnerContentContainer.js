@@ -99,8 +99,11 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
 
 const EditableInnerContentContainer = (props) => {
   const styles = {
-    editIcon: {
-      position: 'absolute',
+    editActions: {
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    actionIcon: {
       background: '#9A3324', // plum
       color: 'white',
       height: '30px',
@@ -111,9 +114,7 @@ const EditableInnerContentContainer = (props) => {
       alignItems: 'center',
       zIndex: '1',
       cursor: 'pointer',
-      bottom: '-5px',
-      left: '50%',
-      transform: 'translateX(-20px)',
+      margin: '5px'
     }
   }
 
@@ -121,15 +122,27 @@ const EditableInnerContentContainer = (props) => {
     props.onDuplicate(props.sectionIndex)
   }
 
+  const handleDelete = () => {
+    props.onDelete(props.sectionIndex)
+  }
+
   return (
     <div>
       { generateContentComponents(props.content, props.sectionIndex, props.onUpdate) }
-      {
-        props.onDuplicate &&
-        <div className='edit-icon' style={styles.editIcon} onClick={handleDuplicate}>
-          <FontAwesome name='plus' />
-        </div>
-      }
+      <div className="edit-actions" style={styles.editActions}>
+        {
+          props.onDuplicate &&
+          <div className='edit-icon' style={styles.actionIcon} onClick={handleDuplicate}>
+            <FontAwesome name='plus' />
+          </div>
+        }
+        {
+          props.onDelete &&
+          <div className='edit-icon' style={styles.actionIcon} onClick={handleDelete}>
+            <FontAwesome name='remove' />
+          </div>
+        }
+      </div>
     </div>
   );
 }

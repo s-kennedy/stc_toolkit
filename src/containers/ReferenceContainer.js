@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { updateSectionContent, duplicateSection } from '../redux/actions'
+import { updateSectionContent, duplicateSection, deleteSection } from '../redux/actions'
 import InnerContentContainer from '../containers/InnerContentContainer';
 import EditableInnerContentContainer from '../containers/EditableInnerContentContainer';
 
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onDuplicate: (sectionIndex) => {
       dispatch(duplicateSection(sectionIndex))
+    },
+    onDelete: (sectionIndex) => {
+      dispatch(deleteSection(sectionIndex))
     }
   }
 }
@@ -39,6 +42,7 @@ const ReferenceContainer = (props) => {
             sectionIndex={props.index}
             content={props.content}
             onUpdate={props.onUpdateSectionContent}
+            onDelete={props.onDelete}
             onDuplicate={props.onDuplicate}
           /> :
           <InnerContentContainer content={props.content} />

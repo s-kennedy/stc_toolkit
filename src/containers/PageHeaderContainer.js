@@ -5,6 +5,8 @@ import EditableTitleWithHolder from '../components/editable/TitleWithHolder'
 import DisplayTitleWithHolder from '../components/display/TitleWithHolder'
 import { Jumbotron } from 'reactstrap';
 
+import img from '../assets/img/home_header.jpg';
+
 function mapStateToProps(state) {
   return {
     title: state.pageData.title,
@@ -23,9 +25,9 @@ function mapDispatchToProps(dispatch) {
 const styles = {
   jumbotron: {
     display: 'flex',
-    background: 'url(https://www.savethechildren.org.uk/content/dam/global/images/countries/syria/rescue-at-sea-vos-sc127177-orig.jpg.thumbimage.1536.1536.jpg) no-repeat center center',
+    background: `url(${img}) no-repeat center center`,
     backgroundSize: 'cover',
-    height: '60vh',
+    height: '65vh',
     minHeight: '440px',
     alignItems: 'center'
   }

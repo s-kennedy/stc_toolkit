@@ -66,6 +66,10 @@ export const content = (state={}, action) => {
       const stateArr = Object.values(state)
       stateArr.splice(action.sectionIndex, 0, newSection)
       return stateArr
+    case 'DELETE_SECTION':
+      const stateArray = Object.values(state)
+      stateArray.splice(action.sectionIndex, 1)
+      return stateArray
     default:
       return state
   }
