@@ -1,4 +1,3 @@
-import Auth0Lock from 'auth0-lock'
 import logo from '../assets/img/STC_Logo_Horiz.png'
 import { decodeJwt } from './jwt'
 
@@ -23,6 +22,11 @@ export default class AuthService {
       }
     })
     this.login = this.login.bind(this)
+  }
+
+  getLock() {
+    // An instance of Lock
+    return this.lock
   }
 
   login() {

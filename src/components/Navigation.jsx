@@ -4,7 +4,7 @@ import { filter } from 'lodash'
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
 import { logIn, logOut, doAuthentication } from '../redux/actions'
-import AuthService from '../utils/NewAuthService'
+import AuthService from '../utils/AuthService'
 
 import {
   Button,
@@ -50,8 +50,11 @@ export default class Navigation extends React.Component {
     if (!this.auth) {
       this.auth = new AuthService(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN);
       this.lock = this.auth.getLock();
-      this.lock.on('authenticated', () => {
-        this.props.userLoggedIn()
+      this.lock.on('authenticated', (authResult) => {
+        this.auth.setToken(authResult.accessToken)
+        if (this.auth.loggedIn()) {
+          this.props.userLoggedIn()
+        }
       });
     }
     this.auth.login();
