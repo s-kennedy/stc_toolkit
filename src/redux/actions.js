@@ -1,5 +1,5 @@
 import { api } from '../utils/init';
-import { decodeJwt } from '../utils/jwt';
+import AuthService from '../utils/AuthService';
 
 export function userLoggedIn(userRoles=[]) {
   return { type: 'USER_LOGGED_IN', userRoles }
@@ -9,16 +9,14 @@ export function userLoggedOut() {
   return { type: 'USER_LOGGED_OUT' }
 }
 
-export function checkAuthentication() {
-  return dispatch => {
-    const token = localStorage.getItem('stc_toolkit_access_token')
-    if (!!token) {
-      const decodedToken = decodeJwt(token)
-      const roles = decodedToken['https://savethechildren.net/roles']
-      dispatch(userLoggedIn(roles))
-    }
-  }
-}
+// export function checkAuthentication() {
+//   return dispatch => {
+//     const token = localStorage.getItem('stc_toolkit_access_token')
+//     if (!!token) {
+//       dispatch(userLoggedIn(roles))
+//     }
+//   }
+// }
 
 // PAGE EDITING ------------------------
 

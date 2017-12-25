@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { filter } from 'lodash'
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
-import { logIn, logOut, doAuthentication } from '../redux/actions'
 import AuthService from '../utils/AuthService'
+import { lock } from '../utils/init'
 
 import {
   Button,
@@ -37,7 +37,7 @@ export default class Navigation extends React.Component {
     this.state = {
       isOpen: false
     };
-    this.props.checkPreviousAuthentication()
+    // this.props.checkPreviousAuthentication()
   }
 
   toggle() {
@@ -48,20 +48,13 @@ export default class Navigation extends React.Component {
 
   login() {
     if (!this.auth) {
-      this.auth = new AuthService(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN);
-      this.lock = this.auth.getLock();
-      this.lock.on('authenticated', (authResult) => {
-        this.auth.setToken(authResult.accessToken)
-        if (this.auth.loggedIn()) {
-          this.props.userLoggedIn()
-        }
-      });
+      this.auth = new AuthService(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, this.props.userLoggedIn)
     }
-    this.auth.login();
+    this.auth.login()
   }
 
   logout() {
-    this.auth.logout();
+    localStorage.removeItem('stc_toolkit_access_token');
     this.props.userLoggedOut();
   }
 

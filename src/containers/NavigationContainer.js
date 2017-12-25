@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { logIn, logOut, doAuthentication, checkAuthentication } from '../redux/actions'
+import { userLoggedIn, userLoggedOut } from '../redux/actions'
 import Navigation from '../components/Navigation'
 
 const mapStateToProps = (state) => {
@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
     userLoggedOut: () => {
       dispatch(userLoggedOut())
     },
-    checkPreviousAuthentication: () => {
-      dispatch(checkAuthentication())
-    }
+    // checkPreviousAuthentication: () => {
+    //   dispatch(checkAuthentication())
+    // }
   }
 }
 

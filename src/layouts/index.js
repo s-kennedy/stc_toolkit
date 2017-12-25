@@ -27,9 +27,8 @@ export default class TemplateWrapper extends React.Component {
             keywords="children, Save the Children, poverty alleviation, poverty reduction, child sensitivity, toolkit"
             viewport="children, Save the Children, poverty alleviation, poverty reduction, child sensitivity, toolkit"
           />
-          <script src="https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js"></script>
           <script src="https://use.fontawesome.com/ab5e247e92.js"></script>
-          <script src="https://cdn.auth0.com/js/lock/10.5/lock.min.js"></script>
+          <script src="https://cdn.auth0.com/js/lock/10.24.1/lock.min.js"></script>
         </Helmet>
         <NavigationContainer data={this.props.data.allPages.edges} />
         <AdminToolbarContainer />

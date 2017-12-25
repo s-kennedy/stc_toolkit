@@ -1,8 +1,8 @@
 import logo from '../assets/img/STC_Logo_Horiz.png'
-import { decodeJwt } from './jwt'
 
 export default class AuthService {
-  constructor(clientId, domain) {
+  constructor(clientId, domain, authCallback) {
+    this.authCallback = authCallback
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
       oidcConformant: true,
@@ -22,11 +22,18 @@ export default class AuthService {
       }
     })
     this.login = this.login.bind(this)
+    this.lock.on('authenticated', this._doAuthentication.bind(this))
+  }
+
+  _doAuthentication(authResult){
+    // Saves the user token
+    debugger;
+    this.setToken(authResult.idToken)
+    this.authCallback()
   }
 
   getLock() {
-    // An instance of Lock
-    return this.lock
+    return this.lock;
   }
 
   login() {
@@ -34,7 +41,13 @@ export default class AuthService {
   }
 
   loggedIn() {
-    return !!this.getToken()
+    const token = this.getToken();
+    if (!token) { return false }
+
+    const decodedToken = this.decodeToken();
+    const expiry = decodedToken.exp;
+    const currentTimestamp = Math.round(+new Date / 1e3);
+    return expiry >= currentTimestamp;
   }
 
   setToken(accessToken) {
@@ -51,7 +64,9 @@ export default class AuthService {
 
   decodeToken() {
     const token = localStorage.getItem('stc_toolkit_access_token')
-    return decodeJwt(token)
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   }
 
   rolesFromToken() {
