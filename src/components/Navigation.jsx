@@ -4,7 +4,7 @@ import { filter } from 'lodash'
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
 import { logIn, logOut, doAuthentication } from '../redux/actions'
-// import AuthService from '../utils/NewAuthService'
+import AuthService from '../utils/NewAuthService'
 
 import {
   Button,
@@ -35,21 +35,9 @@ export default class Navigation extends React.Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false,
-      loggedIn: false
+      isOpen: false
     };
-    // this.props.checkPreviousAuthentication()
-    // this.props.listenForAuthentication()
-  }
-
-  componentDidMount() {
-    debugger;
-    const AuthService = require('../utils/NewAuthService');
-    this.auth = new AuthService('hvh4kk59W4FnQ5YuHOX3enr2JqvfnYM2', 'cstoolkit.eu.auth0.com');
-    this.setState({ loggedIn: this.auth.loggedIn() });
-    this.auth.callback = () => {
-      this.setState({ loggedIn: this.auth.loggedIn() });
-    };
+    this.props.checkPreviousAuthentication()
   }
 
   toggle() {
@@ -59,7 +47,19 @@ export default class Navigation extends React.Component {
   }
 
   login() {
+    if (!this.auth) {
+      this.auth = new AuthService(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN);
+      this.lock = this.auth.getLock();
+      this.lock.on('authenticated', () => {
+        this.props.userLoggedIn()
+      });
+    }
     this.auth.login();
+  }
+
+  logout() {
+    this.auth.logout();
+    this.props.userLoggedOut();
   }
 
   renderSignInUp = () => {
@@ -67,16 +67,17 @@ export default class Navigation extends React.Component {
   }
 
   renderLogOut = () => {
-    return <Button color="secondary" >Sign out</Button>
+    return <Button color="secondary" onClick={this.logout.bind(this)}>Sign out</Button>
   }
 
   render() {
     const aboutPages = filter(this.props.data, (page) => ( page.node.fields.category === 'about' ));
     const referencePages = filter(this.props.data, (page) => ( page.node.fields.category === 'reference' ));
 
+    const loginButton = this.state.loggedIn ? <div>HELLO</div> : <button onClick={this.login.bind(this)}>Login</button>;
+
     return (
       <div>
-        <script src="https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js"></script>
         <Navbar color="faded" light expand="md" style={styles.navbar}>
           <NavbarBrand href="/">
             <img style={styles.logo} src={logo} alt='Save the Children' />
@@ -116,7 +117,7 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                { this.state.loggedIn ? this.renderLogOut() : this.renderSignInUp() }
+                { this.props.isLoggedIn ?  this.renderLogOut() : this.renderSignInUp() }
               </NavItem>
             </Nav>
           </Collapse>

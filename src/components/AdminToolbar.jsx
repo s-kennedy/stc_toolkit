@@ -9,7 +9,6 @@ import {
   NavItem } from 'reactstrap';
 
 import { savePage } from '../utils/API';
-// import { auth } from '../utils/init';
 
 const styles = {
   toolbar: {
@@ -26,7 +25,6 @@ export default class AdminToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    // this.token = auth.getToken();
     this.savePageToDatabase = () => this._savePageToDatabase();
     this.state = {
       isOpen: false

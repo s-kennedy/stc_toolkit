@@ -19,22 +19,17 @@ export default class TemplateWrapper extends React.Component {
   render() {
     return(
       <div>
-        <Helmet
-          title="Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit"
-          meta={[
-            { name: 'description', content: 'Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit' },
-            { name: 'keywords', content: 'children, Save the Children, poverty alleviation, poverty reduction, child sensitivity, toolkit' },
-            { name: 'viewport', content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" },
-            { name: 'apple-mobile-web-app-capable', content: 'yes' },
-            { name: 'apple-touch-fullscreen', content: 'yes' },
-            { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
-          ]}
-          script={[
-            {src: 'https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js'}
-          ]}
-        >
+        <Helmet>
+          <title>"Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit"</title>
+          <meta
+            charSet="utf-8"
+            description="Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit"
+            keywords="children, Save the Children, poverty alleviation, poverty reduction, child sensitivity, toolkit"
+            viewport="children, Save the Children, poverty alleviation, poverty reduction, child sensitivity, toolkit"
+          />
           <script src="https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js"></script>
           <script src="https://use.fontawesome.com/ab5e247e92.js"></script>
+          <script src="https://cdn.auth0.com/js/lock/10.5/lock.min.js"></script>
         </Helmet>
         <NavigationContainer data={this.props.data.allPages.edges} />
         <AdminToolbarContainer />

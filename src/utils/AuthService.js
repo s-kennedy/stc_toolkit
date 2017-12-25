@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock'
 import logo from '../assets/img/STC_Logo_Horiz.png'
+import { decodeJwt } from './jwt'
 
 export default class AuthService {
   constructor(clientId, domain) {
@@ -21,12 +22,7 @@ export default class AuthService {
         title: "Save the Children Child Sensitivity Toolkit"
       }
     })
-    this.setAuthenticatedCallback = this.setAuthenticatedCallback.bind(this)
     this.login = this.login.bind(this)
-  }
-
-  setAuthenticatedCallback(callback) {
-    this.lock.on('authenticated', callback)
   }
 
   login() {
@@ -34,13 +30,7 @@ export default class AuthService {
   }
 
   loggedIn() {
-    const token = this.getToken();
-    if (!token) { return false }
-
-    const decodedToken = this.decodeToken();
-    const expiry = decodedToken.exp;
-    const currentTimestamp = Math.round(+new Date / 1e3);
-    return expiry >= currentTimestamp;
+    return !!this.getToken()
   }
 
   setToken(accessToken) {
@@ -57,9 +47,7 @@ export default class AuthService {
 
   decodeToken() {
     const token = localStorage.getItem('stc_toolkit_access_token')
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
+    return decodeJwt(token)
   }
 
   rolesFromToken() {

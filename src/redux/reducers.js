@@ -1,12 +1,10 @@
 export const adminTools = (state={}, action) => {
   switch (action.type) {
-    case 'SHOW_LOCK':
-      return { ...state, showingLock: true }
-    case 'LOCK_SUCCESS':
-      return { ...state, showingLock: false, isLoggedIn: true, userRoles: action.userRoles }
+    case 'USER_LOGGED_IN':
+      return { ...state, isLoggedIn: true, userRoles: action.userRoles }
     case 'LOCK_FAILURE':
-      return { ...state, showingLock: false, isLoggedIn: false, error: action.err }
-    case 'LOG_OUT_SUCCESS':
+      return { ...state, isLoggedIn: false, error: action.err }
+    case 'USER_LOGGED_OUT':
       return { ...state, isLoggedIn: false }
     case 'TOGGLE_EDITING':
       return { ...state, isEditingPage: !state.isEditingPage }
