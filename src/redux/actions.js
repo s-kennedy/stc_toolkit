@@ -1,63 +1,63 @@
-import { auth } from '../utils/init';
+// import { auth } from '../utils/init';
 import { api } from '../utils/init';
 
 
 // AUTHENTICATION ------------------------
 
-export function showLock() {
-  return { type: 'SHOW_LOCK' }
-}
+// export function showLock() {
+//   return { type: 'SHOW_LOCK' }
+// }
 
-export function lockSuccess(userRoles) {
-  return { type: 'LOCK_SUCCESS', userRoles }
-}
+// export function lockSuccess(userRoles) {
+//   return { type: 'LOCK_SUCCESS', userRoles }
+// }
 
-export function loginFailure(err) {
-  return { type: 'LOCK_FAILURE', err }
-}
+// export function loginFailure(err) {
+//   return { type: 'LOCK_FAILURE', err }
+// }
 
-export function logIn() {
-  return dispatch => {
-    auth.login();
-    dispatch(showLock())
-  }
-}
+// export function logIn() {
+//   return dispatch => {
+//     auth.login();
+//     dispatch(showLock())
+//   }
+// }
 
-export function doAuthentication() {
-  return dispatch => {
-    auth.setAuthenticatedCallback((authResult) => {
-      if (authResult.accessToken) {
-        auth.setToken(authResult.accessToken);
-        const roles = auth.rolesFromToken();
-        return dispatch(lockSuccess(roles))
-      } else {
-        return dispatch(lockError())
-      }
-    })
-  }
-}
+// export function doAuthentication() {
+//   return dispatch => {
+//     auth.setAuthenticatedCallback((authResult) => {
+//       if (authResult.accessToken) {
+//         auth.setToken(authResult.accessToken);
+//         const roles = auth.rolesFromToken();
+//         return dispatch(lockSuccess(roles))
+//       } else {
+//         return dispatch(lockError())
+//       }
+//     })
+//   }
+// }
 
-export function checkAuthentication() {
-  return dispatch => {
-    const isLoggedIn = auth.loggedIn();
+// export function checkAuthentication() {
+//   return dispatch => {
+//     const isLoggedIn = auth.loggedIn();
 
-    if (isLoggedIn) {
-      const roles = auth.rolesFromToken();
-      return dispatch(lockSuccess(roles))
-    }
-  }
-}
+//     if (isLoggedIn) {
+//       const roles = auth.rolesFromToken();
+//       return dispatch(lockSuccess(roles))
+//     }
+//   }
+// }
 
-export function loggedOutSuccess() {
-  return { type: 'LOG_OUT_SUCCESS' }
-}
+// export function loggedOutSuccess() {
+//   return { type: 'LOG_OUT_SUCCESS' }
+// }
 
-export function logOut() {
-  return dispatch => {
-    auth.logout()
-    dispatch(loggedOutSuccess())
-  }
-}
+// export function logOut() {
+//   return dispatch => {
+//     auth.logout()
+//     dispatch(loggedOutSuccess())
+//   }
+// }
 
 // PAGE EDITING ------------------------
 

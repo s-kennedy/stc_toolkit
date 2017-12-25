@@ -4,6 +4,8 @@ import { filter } from 'lodash'
 import Link from 'gatsby-link';
 import logo from '../assets/img/STC_Logo_Horiz.png';
 import { logIn, logOut, doAuthentication } from '../redux/actions'
+// import AuthService from '../utils/NewAuthService'
+
 import {
   Button,
   Collapse,
@@ -34,9 +36,20 @@ export default class Navigation extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      loggedIn: false
     };
-    this.props.checkPreviousAuthentication()
-    this.props.listenForAuthentication()
+    // this.props.checkPreviousAuthentication()
+    // this.props.listenForAuthentication()
+  }
+
+  componentDidMount() {
+    debugger;
+    const AuthService = require('../utils/NewAuthService');
+    this.auth = new AuthService('hvh4kk59W4FnQ5YuHOX3enr2JqvfnYM2', 'cstoolkit.eu.auth0.com');
+    this.setState({ loggedIn: this.auth.loggedIn() });
+    this.auth.callback = () => {
+      this.setState({ loggedIn: this.auth.loggedIn() });
+    };
   }
 
   toggle() {
@@ -45,19 +58,25 @@ export default class Navigation extends React.Component {
     });
   }
 
+  login() {
+    this.auth.login();
+  }
+
   renderSignInUp = () => {
-    return <Button color="secondary" onClick={ this.props.onLogIn }>Sign In / Sign Up</Button>
+    return <Button color="secondary" onClick={this.login.bind(this)}>Sign In / Sign Up</Button>
   }
 
   renderLogOut = () => {
-    return <Button color="secondary" onClick={ this.props.onLogOut }>Sign out</Button>
+    return <Button color="secondary" >Sign out</Button>
   }
 
   render() {
     const aboutPages = filter(this.props.data, (page) => ( page.node.fields.category === 'about' ));
     const referencePages = filter(this.props.data, (page) => ( page.node.fields.category === 'reference' ));
+
     return (
       <div>
+        <script src="https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js"></script>
         <Navbar color="faded" light expand="md" style={styles.navbar}>
           <NavbarBrand href="/">
             <img style={styles.logo} src={logo} alt='Save the Children' />
@@ -97,7 +116,7 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                { this.props.isLoggedIn ? this.renderLogOut() : this.renderSignInUp() }
+                { this.state.loggedIn ? this.renderLogOut() : this.renderSignInUp() }
               </NavItem>
             </Nav>
           </Collapse>

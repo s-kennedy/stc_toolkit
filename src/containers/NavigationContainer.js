@@ -10,18 +10,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogIn: () => {
-      dispatch(logIn())
-    },
-    onLogOut: () => {
-      dispatch(logOut())
-    },
-    listenForAuthentication: () => {
-      dispatch(doAuthentication())
-    },
-    checkPreviousAuthentication: () => {
-      dispatch(checkAuthentication())
-    }
+    // onLogIn: () => {
+    //   dispatch(logIn())
+    // },
+    // onLogOut: () => {
+    //   dispatch(logOut())
+    // },
+    // listenForAuthentication: () => {
+    //   dispatch(doAuthentication())
+    // },
+    // checkPreviousAuthentication: () => {
+    //   dispatch(checkAuthentication())
+    // }
   }
 }
 

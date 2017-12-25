@@ -29,7 +29,11 @@ export default class TemplateWrapper extends React.Component {
             { name: 'apple-touch-fullscreen', content: 'yes' },
             { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
           ]}
+          script={[
+            {src: 'https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js'}
+          ]}
         >
+          <script src="https://cdn.auth0.com/js/auth0/8.12.1/auth0.min.js"></script>
           <script src="https://use.fontawesome.com/ab5e247e92.js"></script>
         </Helmet>
         <NavigationContainer data={this.props.data.allPages.edges} />
