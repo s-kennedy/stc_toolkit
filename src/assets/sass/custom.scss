@@ -25,20 +25,23 @@ section {
 
 .home {
   .jumbotron {
-
+    padding: 2rem;
   }
 
   .section {
     .inner-content {
       display: flex;
+      flex-wrap: wrap;
     }
 
     .header {
       display: flex;
+      padding-right: 20px;
     }
 
     .header, .para {
       flex: 1 1 50%;
+      min-width: 300px;
     }
   }
 }
@@ -63,13 +66,23 @@ section {
   }
 }
 
+.display-title {
+  max-width: 60vw;
+}
+
 .headline-holder {
+  line-height: 1.1;
   background-color: white;
-  padding: 2px 20px;
+  padding: 4px 20px;
+  border-radius: 8px;
+  -webkit-box-decoration-break: clone;
+  -o-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 section.call-to-action {
   padding: 3rem;
+  line-height: 1;
   background-color: $plum;
 
   .para {
@@ -90,4 +103,8 @@ section.call-to-action {
       background-color: transparentize(white, 0.1);
     }
   }
+}
+
+button {
+  cursor: pointer;
 }

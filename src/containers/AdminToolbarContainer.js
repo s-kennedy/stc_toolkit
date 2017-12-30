@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggleEditing: () => {
       dispatch(toggleEditing())
     },
-    savePage: (pageData, content) => {
-      dispatch(savePage(pageData, content))
+    savePage: (pageData, content, token) => {
+      dispatch(savePage(pageData, content, token))
     }
   }
 }

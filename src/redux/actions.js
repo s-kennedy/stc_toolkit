@@ -1,4 +1,6 @@
-import { api, auth } from '../utils/init';
+import { api } from '../utils/init';
+
+// AUTHENTICATION ------------------------
 
 export function userLoggedIn(userRoles=[]) {
   return { type: 'USER_LOGGED_IN', userRoles }
@@ -8,30 +10,15 @@ export function userLoggedOut() {
   return { type: 'USER_LOGGED_OUT' }
 }
 
-// export function logIn(accessToken) {
-//   return dispatch => {
-//     auth.setToken(accessToken);
-//     const roles = auth.rolesFromToken();
-//     dispatch(userLoggedIn(roles))
-//   }
-// }
+// NOTIFICATIONS ------------------------
 
-// export function logOut() {
-//   return dispatch => {
-//     auth.logout();
-//     dispatch(userLoggedOut());
-//   }
-// }
+export function showNotification(message, color) {
+  return { type: 'SHOW_NOTIFICATION', message, color }
+}
 
-// export function checkAuthentication() {
-//   return dispatch => {
-//     const token = auth.getToken()
-//     if (!!token) {
-//       const roles = auth.rolesFromToken()
-//       dispatch(userLoggedIn(roles))
-//     }
-//   }
-// }
+export function closeNotification() {
+  return { type: 'CLOSE_NOTIFICATION' }
+}
 
 // PAGE EDITING ------------------------
 
@@ -39,13 +26,12 @@ export function toggleEditing() {
   return { type: 'TOGGLE_EDITING'}
 }
 
-export function savePage(pageData, content) {
+export function savePage(pageData, content, token) {
   return dispatch => {
     dispatch(savingPage());
 
     const pageId = pageData.id;
     const url = `/pages/${pageId}`;
-    const token = auth.getToken();
     const data = {
       page: {
         content: content,
@@ -56,13 +42,14 @@ export function savePage(pageData, content) {
 
     api.put(url, data, { headers: { 'Authorization': 'Bearer ' + token } })
       .then((res) => {
+        dispatch(toggleEditing())
         if (res.status === 200) {
-          dispatch(savePageSuccess());
+          dispatch(showNotification('Your changes have been saved.', 'success'));
         } else {
-          dispatch(savePageFailure(res))
+          dispatch(showNotification('There was an error saving your page, please try again.', 'danger'));
         }
       })
-     .catch((err) => dispatch(savePageFailure(err)))
+     .catch((err) => dispatch(showNotification(`There was an error saving your page: ${err}`, 'danger')))
   }
 }
 

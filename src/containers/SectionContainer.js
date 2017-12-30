@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
 const SectionContainer = (props) => {
     return (
       <section className={`section ${props.classes}`}>
-        <div style={styles.container} className='container col-xs-12 col-sm-8'>
+        <div style={styles.container} className='container col-xs-12 col-sm-12 col-md-8'>
         {
           props.isEditingPage ?
           <EditableInnerContentContainer

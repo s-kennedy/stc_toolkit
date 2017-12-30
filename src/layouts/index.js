@@ -1,9 +1,11 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 import NavigationContainer from '../containers/NavigationContainer';
 import AdminToolbarContainer from '../containers/AdminToolbarContainer';
+import NotificationContainer from '../containers/NotificationContainer';
 import Footer from '../components/display/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -30,6 +32,7 @@ export default class TemplateWrapper extends React.Component {
           <script src="https://use.fontawesome.com/ab5e247e92.js"></script>
           <script src="https://cdn.auth0.com/js/lock/10.24.1/lock.min.js"></script>
         </Helmet>
+        <NotificationContainer />
         <NavigationContainer data={this.props.data.allPages.edges} />
         <AdminToolbarContainer />
         <div>

@@ -29,7 +29,7 @@ const styles = {
     backgroundSize: 'cover',
     height: '65vh',
     minHeight: '440px',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   }
 }
 

@@ -73,10 +73,33 @@ export const content = (state={}, action) => {
   }
 }
 
+export const notifications = (state={}, action) => {
+  switch (action.type) {
+    case 'SHOW_NOTIFICATION':
+      return {
+        ...state,
+        message: action.message,
+        color: action.color
+      }
+    case 'CLOSE_NOTIFICATION':
+      return {
+          ...state,
+          message: null,
+          color: null
+      }
+    default:
+      return state
+  }
+}
+
+
+
 export const appReducers = (state = {}, action) => {
   return {
+    notifications: notifications(state.notifications, action),
     adminTools: adminTools(state.adminTools, action),
     pageData: pageData(state.pageData, action),
     content: content(state.content, action),
   }
 }
+

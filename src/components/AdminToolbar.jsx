@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AuthService from '../utils/AuthService'
+
 import {
   Button,
   Collapse,
@@ -18,6 +20,9 @@ const styles = {
   saveBtn: {
     backgroundColor: '#009CA6',
     color: '#FFF'
+  },
+  navButton: {
+    marginRight: '6px'
   }
 }
 
@@ -25,6 +30,7 @@ export default class AdminToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.auth = new AuthService();
     this.savePageToDatabase = () => this._savePageToDatabase();
     this.state = {
       isOpen: false
@@ -38,20 +44,21 @@ export default class AdminToolbar extends React.Component {
   }
 
   _savePageToDatabase () {
-    this.props.savePage(this.props.pageData, this.props.content)
+    const token = this.auth.getToken();
+    this.props.savePage(this.props.pageData, this.props.content, token)
   }
 
   render() {
-
     if (this.props.isLoggedIn && this.props.allowEditing) {
-      const editingText = this.props.isEditingPage ? 'Cancel' : 'Edit this page';
+      const editingText = this.props.isEditingPage ? 'Stop editing' : 'Edit this page';
+
       return (
         <div>
           <Navbar style={styles.toolbar} expand="md">
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem>
+                <NavItem style={styles.navButton}>
                   <Button color='white' onClick={this.props.onToggleEditing}>{editingText}</Button>
                 </NavItem>
                 <NavItem>
