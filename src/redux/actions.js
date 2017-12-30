@@ -8,30 +8,30 @@ export function userLoggedOut() {
   return { type: 'USER_LOGGED_OUT' }
 }
 
-export function logIn(accessToken) {
-  return dispatch => {
-    auth.setToken(accessToken);
-    const roles = auth.rolesFromToken();
-    dispatch(userLoggedIn(roles))
-  }
-}
+// export function logIn(accessToken) {
+//   return dispatch => {
+//     auth.setToken(accessToken);
+//     const roles = auth.rolesFromToken();
+//     dispatch(userLoggedIn(roles))
+//   }
+// }
 
-export function logOut() {
-  return dispatch => {
-    auth.logout();
-    dispatch(userLoggedOut());
-  }
-}
+// export function logOut() {
+//   return dispatch => {
+//     auth.logout();
+//     dispatch(userLoggedOut());
+//   }
+// }
 
-export function checkAuthentication() {
-  return dispatch => {
-    const token = auth.getToken()
-    if (!!token) {
-      const roles = auth.rolesFromToken()
-      dispatch(userLoggedIn(roles))
-    }
-  }
-}
+// export function checkAuthentication() {
+//   return dispatch => {
+//     const token = auth.getToken()
+//     if (!!token) {
+//       const roles = auth.rolesFromToken()
+//       dispatch(userLoggedIn(roles))
+//     }
+//   }
+// }
 
 // PAGE EDITING ------------------------
 

@@ -40,11 +40,13 @@ export default class Navigation extends React.Component {
     this.login = () => this._login()
     this.logout = () => this._logout()
     this.initializeLock = () => this._initializeLock()
-    this.props.checkPreviousAuthentication()
+    this.checkPreviousAuthentication = () => this._checkPreviousAuthentication();
+    this.auth = new AuthService();
   }
 
   componentDidMount() {
     this.initializeLock()
+    this.checkPreviousAuthentication()
   }
 
   toggle() {
@@ -55,6 +57,14 @@ export default class Navigation extends React.Component {
 
   _login() {
     this.lock.show()
+  }
+
+  _checkPreviousAuthentication() {
+    const token = this.auth.getToken()
+    if (!!token) {
+      const roles = this.auth.rolesFromToken()
+      this.props.userLoggedIn(roles);
+    }
   }
 
   _initializeLock() {
@@ -78,11 +88,10 @@ export default class Navigation extends React.Component {
         }
       })
       this.lock.on('authenticated', (authResult) => {
-        this.props.logIn(authResult.accessToken);
+        this.auth.setToken(authResult.accessToken);
+        const roles = this.auth.rolesFromToken()
+        this.props.userLoggedIn(roles);
       })
-      if (!!this.lock) {
-        console.log('lock initialized!')
-      }
     } catch(e) {
       setTimeout(() => { this.initializeLock() }, 100)
     }
@@ -90,7 +99,8 @@ export default class Navigation extends React.Component {
 
 
   _logout() {
-    this.props.logOut();
+    this.auth.logout();
+    this.props.userLoggedOut();
   }
 
   renderSignInUp = () => {
@@ -123,7 +133,7 @@ export default class Navigation extends React.Component {
                   {
                     aboutPages.map((page, index) => (
                       <DropdownItem key={index}>
-                        <Link className='nav-link' to={page.node.fields.slug}>{page.node.fields.title}</Link>
+                        <Link className='nav-link' to={`/${page.node.fields.slug}`}>{page.node.fields.title}</Link>
                       </DropdownItem>
                     ))
                   }
@@ -138,7 +148,7 @@ export default class Navigation extends React.Component {
                   {
                     referencePages.map((page, index) => (
                       <DropdownItem key={index}>
-                        <Link className='nav-link' to={page.node.fields.slug}>{page.node.fields.title}</Link>
+                        <Link className='nav-link' to={`/${page.node.fields.slug}`}>{page.node.fields.title}</Link>
                       </DropdownItem>
                     ))
                   }

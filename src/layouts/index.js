@@ -20,7 +20,7 @@ export default class TemplateWrapper extends React.Component {
     return(
       <div>
         <Helmet>
-          <title>"Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit"</title>
+          <title>Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit</title>
           <meta
             charSet="utf-8"
             description="Child Sensitivity in Poverty Alleviation Programming: An Analytical Toolkit"

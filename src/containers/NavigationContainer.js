@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { logIn, logOut, checkAuthentication } from '../redux/actions'
+import { userLoggedIn, userLoggedOut } from '../redux/actions'
 import Navigation from '../components/Navigation'
 
 const mapStateToProps = (state) => {
@@ -10,14 +10,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logIn: (token) => {
-      dispatch(logIn(token))
+    userLoggedIn: (roles) => {
+      dispatch(userLoggedIn(roles))
     },
-    logOut: () => {
-      dispatch(logOut())
-    },
-    checkPreviousAuthentication: () => {
-      dispatch(checkAuthentication())
+    userLoggedOut: () => {
+      dispatch(userLoggedOut())
     }
   }
 }
