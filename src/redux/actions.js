@@ -1,5 +1,4 @@
-import { api } from '../utils/init';
-import AuthService from '../utils/AuthService';
+import { api, auth } from '../utils/init';
 
 export function userLoggedIn(userRoles=[]) {
   return { type: 'USER_LOGGED_IN', userRoles }
@@ -9,14 +8,30 @@ export function userLoggedOut() {
   return { type: 'USER_LOGGED_OUT' }
 }
 
-// export function checkAuthentication() {
-//   return dispatch => {
-//     const token = localStorage.getItem('stc_toolkit_access_token')
-//     if (!!token) {
-//       dispatch(userLoggedIn(roles))
-//     }
-//   }
-// }
+export function logIn(accessToken) {
+  return dispatch => {
+    auth.setToken(accessToken);
+    const roles = auth.rolesFromToken();
+    dispatch(userLoggedIn(roles))
+  }
+}
+
+export function logOut() {
+  return dispatch => {
+    auth.logout();
+    dispatch(userLoggedOut());
+  }
+}
+
+export function checkAuthentication() {
+  return dispatch => {
+    const token = auth.getToken()
+    if (!!token) {
+      const roles = auth.rolesFromToken()
+      dispatch(userLoggedIn(roles))
+    }
+  }
+}
 
 // PAGE EDITING ------------------------
 

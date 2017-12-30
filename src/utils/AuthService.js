@@ -1,45 +1,6 @@
 import logo from '../assets/img/STC_Logo_Horiz.png'
 
 export default class AuthService {
-  constructor(clientId, domain, authCallback) {
-    this.authCallback = authCallback
-    // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {
-      oidcConformant: true,
-      auth: {
-        responseType: 'token',
-        audience: 'stc_toolkit_api',
-        params: {
-          scope: 'openid email'
-        }
-      },
-      theme: {
-        logo: logo,
-        primaryColor: '#DA201C' // red
-      },
-      languageDictionary: {
-        title: "Save the Children Child Sensitivity Toolkit"
-      }
-    })
-    this.login = this.login.bind(this)
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
-  }
-
-  _doAuthentication(authResult){
-    // Saves the user token
-    debugger;
-    this.setToken(authResult.idToken)
-    this.authCallback()
-  }
-
-  getLock() {
-    return this.lock;
-  }
-
-  login() {
-    this.lock.show()
-  }
-
   loggedIn() {
     const token = this.getToken();
     if (!token) { return false }

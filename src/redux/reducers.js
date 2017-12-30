@@ -5,7 +5,7 @@ export const adminTools = (state={}, action) => {
     case 'LOCK_FAILURE':
       return { ...state, isLoggedIn: false, error: action.err }
     case 'USER_LOGGED_OUT':
-      return { ...state, isLoggedIn: false }
+      return { ...state, isLoggedIn: false, isEditingPage: false }
     case 'TOGGLE_EDITING':
       return { ...state, isEditingPage: !state.isEditingPage }
     case 'SAVING_PAGE':

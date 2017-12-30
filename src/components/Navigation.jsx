@@ -37,7 +37,14 @@ export default class Navigation extends React.Component {
     this.state = {
       isOpen: false
     };
-    // this.props.checkPreviousAuthentication()
+    this.login = () => this._login()
+    this.logout = () => this._logout()
+    this.initializeLock = () => this._initializeLock()
+    this.props.checkPreviousAuthentication()
+  }
+
+  componentDidMount() {
+    this.initializeLock()
   }
 
   toggle() {
@@ -46,31 +53,57 @@ export default class Navigation extends React.Component {
     });
   }
 
-  login() {
-    if (!this.auth) {
-      this.auth = new AuthService(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, this.props.userLoggedIn)
-    }
-    this.auth.login()
+  _login() {
+    this.lock.show()
   }
 
-  logout() {
-    localStorage.removeItem('stc_toolkit_access_token');
-    this.props.userLoggedOut();
+  _initializeLock() {
+    try {
+      this.lock = new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, {
+        oidcConformant: true,
+        auth: {
+          redirectUrl: window.location.href,
+          responseType: 'token',
+          audience: 'stc_toolkit_api',
+          params: {
+            scope: 'openid email'
+          }
+        },
+        theme: {
+          logo: logo,
+          primaryColor: '#DA201C' // red
+        },
+        languageDictionary: {
+          title: "Save the Children Child Sensitivity Toolkit"
+        }
+      })
+      this.lock.on('authenticated', (authResult) => {
+        this.props.logIn(authResult.accessToken);
+      })
+      if (!!this.lock) {
+        console.log('lock initialized!')
+      }
+    } catch(e) {
+      setTimeout(() => { this.initializeLock() }, 100)
+    }
+  }
+
+
+  _logout() {
+    this.props.logOut();
   }
 
   renderSignInUp = () => {
-    return <Button color="secondary" onClick={this.login.bind(this)}>Sign In / Sign Up</Button>
+    return <Button color="secondary" onClick={this.login}>Sign In / Sign Up</Button>
   }
 
   renderLogOut = () => {
-    return <Button color="secondary" onClick={this.logout.bind(this)}>Sign out</Button>
+    return <Button color="secondary" onClick={this.logout}>Sign out</Button>
   }
 
   render() {
     const aboutPages = filter(this.props.data, (page) => ( page.node.fields.category === 'about' ));
     const referencePages = filter(this.props.data, (page) => ( page.node.fields.category === 'reference' ));
-
-    const loginButton = this.state.loggedIn ? <div>HELLO</div> : <button onClick={this.login.bind(this)}>Login</button>;
 
     return (
       <div>
@@ -111,7 +144,6 @@ export default class Navigation extends React.Component {
                   }
                 </DropdownMenu>
               </UncontrolledDropdown>
-
               <NavItem>
                 { this.props.isLoggedIn ?  this.renderLogOut() : this.renderSignInUp() }
               </NavItem>
