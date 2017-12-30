@@ -84,7 +84,7 @@ export default class Navigation extends React.Component {
           primaryColor: '#DA201C' // red
         },
         languageDictionary: {
-          title: "Save the Children Child Sensitivity Toolkit"
+          title: "Child Sensitivity Toolkit"
         }
       })
       this.lock.on('authenticated', (authResult) => {
@@ -118,8 +118,10 @@ export default class Navigation extends React.Component {
     return (
       <div>
         <Navbar color="faded" light expand="md" style={styles.navbar}>
-          <NavbarBrand href="/">
-            <img style={styles.logo} src={logo} alt='Save the Children' />
+          <NavbarBrand>
+            <Link to='/'>
+              <img style={styles.logo} src={logo} alt='Save the Children' />
+            </Link>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
