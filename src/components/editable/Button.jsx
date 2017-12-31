@@ -2,59 +2,39 @@ import React from 'react'
 import { Button } from 'reactstrap';
 import Link from 'gatsby-link';
 import CustomButton from '../display/CustomButton'
+import Editable from './Editable'
+import ButtonEditor from '../editingTools/ButtonEditor'
 
 class STCButton extends React.Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
-    this.state = { editing: false, anchor: this.props.anchor, link: this.props.link }
+    this.state = { editing: false }
     this.toggleEditing = () => this._toggleEditing()
-    this.handleAnchorChange = (event) => this._handleAnchorChange(event)
-    this.handleLinkChange = (event) => this._handleLinkChange(event)
-    this.doneEditing = () => this._doneEditing();
+    this.doneEditing = (data) => this._doneEditing(data);
   }
 
   _toggleEditing() {
     this.setState({ editing: !this.state.editing })
   }
 
-  _handleAnchorChange (event) {
-    const anchor = event.currentTarget.value;
-    this.setState({ anchor });
-  };
-
-  _handleLinkChange (event) {
-    const link = event.currentTarget.value;
-    this.setState({ link });
-  };
-
-  _doneEditing() {
+  _doneEditing(updatedButton) {
     this.toggleEditing();
-    this.props.updateContent(this.props.index, { anchor: this.state.anchor, link: this.state.link })
+    this.props.updateContent(this.props.sectionIndex, this.props.index, updatedButton)
   }
 
   render() {
-    const { anchor, link } = this.state;
-
     if (this.state.editing) {
       return (
-        <div>
-          <input
-            value={ anchor }
-            onChange={this.handleAnchorChange}
-          />
-          <input
-            value={ link }
-            onChange={this.handleLinkChange}
-          />
-          <p onClick={this.doneEditing}>done editing</p>
-        </div>
+        <ButtonEditor anchor={this.props.anchor} link={this.props.link} doneEditing={this.doneEditing} />
       )
     }
 
     return (
-      <CustomButton link={link} anchor={anchor} />
+      <Editable toggleEditing={this.toggleEditing}>
+        <CustomButton link={this.props.link} anchor={this.props.anchor} />
+      </Editable>
     )
   }
 };

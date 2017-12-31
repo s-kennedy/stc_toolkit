@@ -109,3 +109,7 @@ section.call-to-action {
 button {
   cursor: pointer;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #009CA6;
+}
