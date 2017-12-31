@@ -6,11 +6,12 @@ import Paragraph from '../components/editable/Paragraph'
 import Name from '../components/editable/Name'
 import Image from '../components/editable/Image'
 import Button from '../components/editable/Button'
+import Action from '../components/editable/Action'
 import FontAwesome from 'react-fontawesome';
 
-import CallToActionContainer from '../containers/CallToActionContainer'
-import SectionContainer from '../containers/SectionContainer'
-import ReferenceContainer from '../containers/ReferenceContainer'
+import CallToActionContainer from '../containers/CallToActionContainer';
+import SectionContainer from '../containers/SectionContainer';
+import ReferenceContainer from '../containers/ReferenceContainer';
 
 
 const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
@@ -85,8 +86,18 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
         <Button
           key={index}
           index={index}
+          sectionIndex={sectionIndex}
           anchor={obj.anchor}
           link={obj.link}
+          updateContent={onUpdate}
+        />);
+      case 'action':
+      return (
+        <Action
+          key={index}
+          index={index}
+          sectionIndex={sectionIndex}
+          text={obj.text}
           updateContent={onUpdate}
         />);
       default:

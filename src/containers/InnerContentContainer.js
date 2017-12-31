@@ -6,6 +6,7 @@ import Paragraph from '../components/display/Paragraph'
 import Image from '../components/display/Image'
 import CustomButton from '../components/display/CustomButton'
 import Name from '../components/display/Name'
+import Action from '../components/display/Action'
 
 import CallToActionContainer from '../containers/CallToActionContainer'
 import SectionContainer from '../containers/SectionContainer'
@@ -30,6 +31,8 @@ const generateContentComponents = (contentJson=[]) => {
         return <CustomButton key={index} anchor={obj.anchor} link={obj.link} />
       case 'name':
         return <Name key={index} text={obj.text} />
+      case 'action':
+        return <Action key={index} text={obj.text} />
     }
   })
 }

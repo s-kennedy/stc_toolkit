@@ -72,7 +72,7 @@ export default class Navigation extends React.Component {
       this.lock = new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, {
         oidcConformant: true,
         auth: {
-          redirectUrl: window.location.href,
+          redirectUrl: window.location.origin,
           responseType: 'token',
           audience: 'stc_toolkit_api',
           params: {
@@ -114,6 +114,7 @@ export default class Navigation extends React.Component {
   render() {
     const aboutPages = filter(this.props.data, (page) => ( page.node.fields.category === 'about' ));
     const referencePages = filter(this.props.data, (page) => ( page.node.fields.category === 'reference' ));
+    const toolkitPages = filter(this.props.data, (page) => ( page.node.fields.category === 'building_block' ));
 
     return (
       <div>
@@ -124,6 +125,21 @@ export default class Navigation extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+
+              <UncontrolledDropdown nav>
+                <DropdownToggle nav caret>
+                  Toolkit
+                </DropdownToggle>
+                <DropdownMenu>
+                  {
+                    toolkitPages.map((page, index) => (
+                      <DropdownItem key={index}>
+                        <Link className='nav-link' to={`/${page.node.fields.slug}`}>{page.node.fields.title}</Link>
+                      </DropdownItem>
+                    ))
+                  }
+                </DropdownMenu>
+              </UncontrolledDropdown>
 
               <UncontrolledDropdown nav>
                 <DropdownToggle nav caret>
