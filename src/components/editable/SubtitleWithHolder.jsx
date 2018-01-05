@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap';
 import Editable from './Editable';
-import DisplayTitleWithHolder from '../display/TitleWithHolder';
+import DisplaySubtitleWithHolder from '../display/SubtitleWithHolder';
 import PlainTextEditor from '../editingTools/PlainTextEditor'
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-class TitleWithHolder extends React.Component {
+class SubtitleWithHolder extends React.Component {
   static propTypes = {};
 
   constructor(props) {
@@ -31,26 +31,26 @@ class TitleWithHolder extends React.Component {
 
   _doneEditing(text) {
     this.toggleEditing();
-    this.props.updateHeader({ title: text })
+    this.props.updateHeader({ subtitle: text })
   }
 
   render() {
     if (this.state.editing) {
       return (
-        <div className='display-title edit-container'>
-          <h1 className="display-3">
+        <div className='display-subtitle edit-container'>
+          <h3>
             <PlainTextEditor text={this.props.text} doneEditing={this.doneEditing} />
-          </h1>
+          </h3>
         </div>
       )
     }
 
     return (
       <Editable toggleEditing={this.toggleEditing}>
-        <DisplayTitleWithHolder text={this.props.text} />
+        <DisplaySubtitleWithHolder text={this.props.text} />
       </Editable>
     )
   }
 };
 
-export default TitleWithHolder;
+export default SubtitleWithHolder;

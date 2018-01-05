@@ -44,30 +44,42 @@ export const content = (state={}, action) => {
       return {
         ...action.content
       }
+    case 'UPDATE_PAGE_HEADER':
+      const headerData = action.header
+      return {
+        ...state,
+        header: {
+          ...state.header,
+          ...headerData
+        }
+      }
     case 'UPDATE_SECTION_CONTENT':
     const { sectionIndex, contentIndex, newContent } = action;
       return {
         ...state,
-        [sectionIndex]: {
-          ...state[sectionIndex],
-          content: {
-            ...state[sectionIndex].content,
-            [contentIndex]: {
-              ...state[sectionIndex].content[contentIndex],
-              ...newContent
+        body: {
+          ...state.body,
+          [sectionIndex]: {
+            ...state.body[sectionIndex],
+            content: {
+              ...state.body[sectionIndex].content,
+              [contentIndex]: {
+                ...state.body[sectionIndex].content[contentIndex],
+                ...newContent
+              }
             }
           }
         }
       }
     case 'DUPLICATE_SECTION':
-      const newSection = Object.assign({}, state[action.sectionIndex])
-      const stateArr = Object.values(state)
+      const newSection = Object.assign({}, state.body[action.sectionIndex])
+      const stateArr = Object.values(state.body)
       stateArr.splice(action.sectionIndex, 0, newSection)
-      return stateArr
+      return { ...state, body: stateArr }
     case 'DELETE_SECTION':
-      const stateArray = Object.values(state)
+      const stateArray = Object.values(state.body)
       stateArray.splice(action.sectionIndex, 1)
-      return stateArray
+      return { ...state, body: stateArray }
     default:
       return state
   }

@@ -1,49 +1,61 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { updatePageTitle } from '../redux/actions'
+import { updatePageHeader } from '../redux/actions'
 import EditableTitleWithHolder from '../components/editable/TitleWithHolder'
+import EditableSubtitleWithHolder from '../components/editable/SubtitleWithHolder'
+import EditableHeaderImage from '../components/editable/HeaderImage'
 import DisplayTitleWithHolder from '../components/display/TitleWithHolder'
+import DisplaySubtitleWithHolder from '../components/display/SubtitleWithHolder'
+import DisplayHeaderImage from '../components/display/HeaderImage'
 import { Jumbotron } from 'reactstrap';
 
-import img from '../assets/img/home_header.jpg';
+import defaultImage from '../assets/img/home_header.jpg';
 
 function mapStateToProps(state) {
   return {
-    title: state.pageData.title,
+    content: state.content.header,
     isEditingPage: state.adminTools.isEditingPage,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onUpdateTitle: (title) => {
-      dispatch(updatePageTitle(title))
+    updatePageHeader: (data) => {
+      dispatch(updatePageHeader(data))
     }
   }
 }
 
 const styles = {
-  jumbotron: {
+  titleWrapper: {
     display: 'flex',
-    background: `url(${img}) no-repeat center center`,
-    backgroundSize: 'cover',
-    height: '65vh',
-    minHeight: '440px',
-    alignItems: 'flex-end'
+    flexDirection: 'column'
   }
 }
 
-const PageHeaderContainer = (props) => {
 
-  return (
-    <Jumbotron style={styles.jumbotron}>
-      {
-        props.isEditingPage ?
-        <EditableTitleWithHolder text={props.title} updateTitle={props.onUpdateTitle} /> :
-        <DisplayTitleWithHolder text={props.title} />
-      }
-    </Jumbotron>
-  )
+const PageHeaderContainer = (props) => {
+  const imageSrc = props.content.image || defaultImage;
+
+  if (props.isEditingPage) {
+    return (
+      <EditableHeaderImage image={imageSrc} updateHeader={props.updatePageHeader}>
+        <div style={styles.titleWrapper}>
+          <EditableTitleWithHolder text={props.content.title} updateHeader={props.updatePageHeader} />
+          <EditableSubtitleWithHolder text={props.content.subtitle} updateHeader={props.updatePageHeader} />
+        </div>
+      </EditableHeaderImage>
+    )
+  } else {
+    return (
+      <DisplayHeaderImage image={imageSrc}>
+        <div style={styles.titleWrapper}>
+          <DisplayTitleWithHolder text={props.content.title} />
+          <DisplaySubtitleWithHolder text={props.content.subtitle} />
+        </div>
+      </DisplayHeaderImage>
+    )
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer)

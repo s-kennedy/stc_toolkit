@@ -1,7 +1,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
-const styles = {
+const innerContentStyles = {
   editContainer: {
     backgroundColor: 'rgba(0,156,166,0.1)', // teal
     position: 'relative',
@@ -23,7 +23,20 @@ const styles = {
   }
 }
 
+const fullWidthStyles = {
+  ...innerContentStyles,
+  editIcon: {
+    ...innerContentStyles.editIcon,
+    left: '15px',
+    top: '15px'
+  }
+}
+
+
 const Editable = (props) => {
+
+  const styles = props.fullWidth ? fullWidthStyles : innerContentStyles
+
   return (
     <div className='edit-container' style={styles.editContainer}>
       <div className='edit-icon' style={styles.editIcon} onClick={props.toggleEditing}>

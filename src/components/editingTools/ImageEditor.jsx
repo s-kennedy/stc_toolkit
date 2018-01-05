@@ -49,7 +49,10 @@ class ImageEditor extends React.Component {
           imgExtension={['.jpg', '.gif', '.png']}
           onChange={this.handleImageChange}
         />
-        <input value={this.state.caption} onChange={this.handleCaptionChange} />
+        {
+          this.props.caption &&
+          <input value={this.state.caption} onChange={this.handleCaptionChange} />
+        }
       </EditorWrapper>
     )
   }

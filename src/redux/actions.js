@@ -34,7 +34,8 @@ export function savePage(pageData, content, token) {
     const url = `/pages/${pageId}`;
     const data = {
       page: {
-        content: content,
+        content: content.body,
+        page_header: content.header,
         title: pageData.title
       },
       id: pageId
@@ -67,6 +68,10 @@ export function savePageFailure(err) {
 
 export function updatePageContent(content) {
   return { type: 'UPDATE_PAGE_CONTENT', content }
+}
+
+export function updatePageHeader(header) {
+  return { type: 'UPDATE_PAGE_HEADER', header }
 }
 
 export function updatePageMetaData(pageData) {

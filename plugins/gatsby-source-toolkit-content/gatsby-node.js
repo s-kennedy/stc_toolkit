@@ -20,6 +20,10 @@ exports.sourceNodes = ({ boundActionCreators }, { resourceType }) => {
             template: resource.template,
             category: resource.page_type
           }
+          const contentNodeContent = {
+            header: resource.page_header,
+            body: resource.content
+          }
 
           const parentNode = {
             id: parentNodeId,
@@ -44,10 +48,10 @@ exports.sourceNodes = ({ boundActionCreators }, { resourceType }) => {
               type: `${resourceType}_content`,
               contentDigest: crypto
                 .createHash(`md5`)
-                .update(JSON.stringify(resource.content))
+                .update(JSON.stringify(contentNodeContent))
                 .digest(`hex`),
               mediaType: `application/json`,
-              content: JSON.stringify(resource.content)
+              content: JSON.stringify(contentNodeContent)
             }
           }
 

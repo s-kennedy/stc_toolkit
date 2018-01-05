@@ -7,7 +7,7 @@ import EditableInnerContentContainer from '../containers/EditableInnerContentCon
 
 const mapStateToProps = (state) => {
   return {
-    content: state.content,
+    content: state.content.body,
     isEditingPage: state.adminTools.isEditingPage,
   }
 }
