@@ -82,7 +82,7 @@ export default class Navigation extends React.Component {
       this.lock = new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, {
         oidcConformant: true,
         auth: {
-          redirectUrl: window.location.origin,
+          redirectUrl: process.env.AUTH0_REDIRECT_URL,
           responseType: 'token',
           audience: 'stc_toolkit_api',
           params: {
