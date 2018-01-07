@@ -6,27 +6,44 @@ const innerContentStyles = {
     backgroundColor: 'rgba(0,156,166,0.1)', // teal
     position: 'relative',
   },
-  editIcon: {
+  actions: {
     position: 'absolute',
     left: '-15px',
     top: '-15px',
-    background: '#009CA6', // teal
+    display: 'flex',
+    alignItems: 'center',
+    zIndex: '1',
+  },
+  edit: {
     color: 'white',
     height: '30px',
     width: '30px',
     borderRadius: '30px',
+    cursor: 'pointer',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: '1',
-    cursor: 'pointer'
+    background: '#009CA6', // teal
+    marginRight: '4px'
+  },
+  delete: {
+    color: 'white',
+    height: '30px',
+    width: '30px',
+    borderRadius: '30px',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: '#9A3324', // plum
+    marginRight: '4px'
   }
 }
 
 const fullWidthStyles = {
   ...innerContentStyles,
-  editIcon: {
-    ...innerContentStyles.editIcon,
+  actions: {
+    ...innerContentStyles.actions,
     left: '15px',
     top: '15px'
   }
@@ -37,10 +54,19 @@ const Editable = (props) => {
 
   const styles = props.fullWidth ? fullWidthStyles : innerContentStyles
 
+  const handleDelete = () => {
+    props.deleteContent(props.sectionIndex, props.contentIndex)
+  }
+
   return (
     <div className='edit-container' style={styles.editContainer}>
-      <div className='edit-icon' style={styles.editIcon} onClick={props.toggleEditing}>
-        <FontAwesome name='pencil' />
+      <div className='actions' style={styles.actions}>
+        <div className='edit-icon' style={styles.edit} onClick={props.toggleEditing}>
+          <FontAwesome name='pencil' />
+        </div>
+        <div className='delete-icon' style={styles.delete} onClick={handleDelete}>
+          <FontAwesome name='trash' />
+        </div>
       </div>
       {props.children}
     </div>

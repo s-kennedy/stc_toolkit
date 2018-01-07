@@ -49,6 +49,10 @@ export default class Navigation extends React.Component {
     this.checkPreviousAuthentication()
   }
 
+  componentWillReceiveProps() {
+    this.checkPreviousAuthentication()
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -59,11 +63,17 @@ export default class Navigation extends React.Component {
     this.lock.show()
   }
 
+  _logout() {
+    this.auth.logout();
+    this.props.userLoggedOut();
+  }
+
   _checkPreviousAuthentication() {
-    const token = this.auth.getToken()
-    if (!!token) {
+    if (this.auth.loggedIn()) {
       const roles = this.auth.rolesFromToken()
       this.props.userLoggedIn(roles);
+    } else {
+      this.logout();
     }
   }
 
@@ -95,12 +105,6 @@ export default class Navigation extends React.Component {
     } catch(e) {
       setTimeout(() => { this.initializeLock() }, 100)
     }
-  }
-
-
-  _logout() {
-    this.auth.logout();
-    this.props.userLoggedOut();
   }
 
   renderSignInUp = () => {

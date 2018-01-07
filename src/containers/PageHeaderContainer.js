@@ -35,7 +35,7 @@ const styles = {
 
 
 const PageHeaderContainer = (props) => {
-  const imageSrc = props.content.image || defaultImage;
+  const imageSrc = props.content && props.content.image ?  props.content.image : defaultImage;
 
   if (props.isEditingPage) {
     return (

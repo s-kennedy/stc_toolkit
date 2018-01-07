@@ -94,3 +94,12 @@ export function deleteSection(sectionIndex) {
   return { type: 'DELETE_SECTION', sectionIndex }
 }
 
+export function addContentItem(sectionIndex, contentType) {
+  return { type: 'ADD_CONTENT_ITEM', sectionIndex, contentType }
+}
+
+export function deleteContentItem(sectionIndex, contentIndex) {
+  return { type: 'DELETE_CONTENT_ITEM', sectionIndex, contentIndex }
+}
+
+

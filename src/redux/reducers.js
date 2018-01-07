@@ -54,7 +54,7 @@ export const content = (state={}, action) => {
         }
       }
     case 'UPDATE_SECTION_CONTENT':
-    const { sectionIndex, contentIndex, newContent } = action;
+      const { sectionIndex, contentIndex, newContent } = action;
       return {
         ...state,
         body: {
@@ -80,6 +80,37 @@ export const content = (state={}, action) => {
       const stateArray = Object.values(state.body)
       stateArray.splice(action.sectionIndex, 1)
       return { ...state, body: stateArray }
+    case 'ADD_CONTENT_ITEM':
+      const section = Object.assign({}, state.body[action.sectionIndex])
+      const contentArr = Object.values(section.content)
+      const newItem = { 'type': 'paragraph', 'text': 'something' }
+
+      contentArr.push(newItem)
+      return {
+        ...state,
+        body: {
+          ...state.body,
+          [action.sectionIndex]: {
+            ...state.body[action.sectionIndex],
+            content: contentArr
+          }
+        }
+      }
+    case 'DELETE_CONTENT_ITEM':
+      const section2 = Object.assign({}, state.body[action.sectionIndex])
+      const contentArr2 = Object.values(section2.content)
+      contentArr2.splice(action.contentIndex, 1)
+
+      return {
+        ...state,
+        body: {
+          ...state.body,
+          [action.sectionIndex]: {
+            ...state.body[action.sectionIndex],
+            content: contentArr2
+          }
+        }
+      }
     default:
       return state
   }

@@ -10,6 +10,10 @@ section {
   &:nth-of-type(even) {
     background-color: $lightBiscuit;
   }
+
+  .inner-content > div, .edit-container {
+    margin-bottom: 20px;
+  }
 }
 
 .edit-container {

@@ -14,7 +14,7 @@ import SectionContainer from '../containers/SectionContainer';
 import ReferenceContainer from '../containers/ReferenceContainer';
 
 
-const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
+const generateContentComponents = (contentJson=[], sectionIndex, onUpdate, onAddContentItem, onDeleteContentItem) => {
   return map(contentJson, (obj, index) => {
     switch (obj.type) {
       case 'section':
@@ -24,6 +24,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           index={index}
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
+          addContent={onAddContentItem}
           content={obj.content}
         />);
       case 'call_to_action':
@@ -33,6 +34,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           index={index}
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
+          addContent={onAddContentItem}
           content={obj.content}
         />);
       case 'reference':
@@ -42,6 +44,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           index={index}
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
+          addContent={onAddContentItem}
           content={obj.content}
         />);
       case 'header':
@@ -51,6 +54,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           index={index}
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
+          deleteContent={onDeleteContentItem}
           text={obj.text}
         />);
       case 'paragraph':
@@ -60,6 +64,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           index={index}
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
+          deleteContent={onDeleteContentItem}
           text={obj.text}
         />);
       case 'name':
@@ -70,6 +75,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           sectionIndex={sectionIndex}
           updateContent={onUpdate}
           text={obj.text}
+          deleteContent={onDeleteContentItem}
         />);
       case 'image':
       return (
@@ -80,6 +86,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           updateContent={onUpdate}
           source={obj.source}
           caption={obj.caption}
+          deleteContent={onDeleteContentItem}
         />);
       case 'button':
       return (
@@ -90,6 +97,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           anchor={obj.anchor}
           link={obj.link}
           updateContent={onUpdate}
+          deleteContent={onDeleteContentItem}
         />);
       case 'action':
       return (
@@ -99,6 +107,7 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate) => {
           sectionIndex={sectionIndex}
           text={obj.text}
           updateContent={onUpdate}
+          deleteContent={onDeleteContentItem}
         />);
       default:
       console.log('No component defined for ' + obj.type)
@@ -137,20 +146,30 @@ const EditableInnerContentContainer = (props) => {
     props.onDelete(props.sectionIndex)
   }
 
+  const handleAddContentItem = () => {
+    props.onAddContentItem(props.sectionIndex, 'paragraph')
+  }
+
   return (
     <div>
-      { generateContentComponents(props.content, props.sectionIndex, props.onUpdate) }
+      { generateContentComponents(props.content, props.sectionIndex, props.onUpdate, props.onAddContentItem, props.onDeleteContentItem) }
       <div className="edit-actions" style={styles.editActions}>
         {
           props.onDuplicate &&
           <div className='edit-icon' style={styles.actionIcon} onClick={handleDuplicate}>
-            <FontAwesome name='plus' />
+            <FontAwesome name='clone' />
           </div>
         }
         {
           props.onDelete &&
           <div className='edit-icon' style={styles.actionIcon} onClick={handleDelete}>
             <FontAwesome name='remove' />
+          </div>
+        }
+        {
+          props.onAddContentItem &&
+          <div className='edit-icon' style={styles.actionIcon} onClick={handleAddContentItem}>
+            <FontAwesome name='plus' />
           </div>
         }
       </div>

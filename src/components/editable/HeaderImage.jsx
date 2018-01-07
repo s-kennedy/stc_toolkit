@@ -41,7 +41,7 @@ class HeaderImage extends React.Component {
       )
     } else {
       return (
-        <Editable toggleEditing={this.toggleEditing} fullWidth={true} height={'65vh'}>
+        <Editable toggleEditing={this.toggleEditing} fullWidth={true} height={'65vh'} {...this.props}>
           <DisplayHeaderImage image={this.props.image}>
             {this.props.children}
           </DisplayHeaderImage>

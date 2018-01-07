@@ -32,7 +32,7 @@ class Image extends React.Component {
     }
 
     return (
-      <Editable toggleEditing={this.toggleEditing}>
+      <Editable toggleEditing={this.toggleEditing} {...this.props}>
         <DisplayImage source={this.props.source} caption={this.props.caption} />
       </Editable>
     )

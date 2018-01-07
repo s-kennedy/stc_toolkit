@@ -47,7 +47,7 @@ class Header extends React.Component {
     }
 
     return (
-      <Editable toggleEditing={this.toggleEditing}>
+      <Editable toggleEditing={this.toggleEditing} {...this.props}>
         <DisplayHeader text={this.props.text} />
       </Editable>
     )

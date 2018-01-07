@@ -31,7 +31,7 @@ class Action extends React.Component {
     }
 
     return (
-      <Editable toggleEditing={this.toggleEditing}>
+      <Editable toggleEditing={this.toggleEditing} {...this.props}>
         <DisplayAction text={this.props.text} />
       </Editable>
     )
