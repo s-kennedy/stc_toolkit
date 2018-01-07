@@ -135,13 +135,21 @@ export default class Navigation extends React.Component {
                   Toolkit
                 </DropdownToggle>
                 <DropdownMenu>
-                  {
-                    toolkitPages.map((page, index) => (
-                      <DropdownItem key={index}>
-                        <Link className='nav-link' to={`/${page.node.fields.slug}`}>{page.node.fields.title}</Link>
-                      </DropdownItem>
-                    ))
-                  }
+                  <DropdownItem>
+                    <Link className='nav-link' to='/building-blocks/analysis'>
+                      Building Block A: Analysis
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link className='nav-link' to='/building-blocks/design'>
+                      Building Block B: Design
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link className='nav-link' to='/building-blocks/meal'>
+                      Building Block C: MEAL
+                    </Link>
+                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
 

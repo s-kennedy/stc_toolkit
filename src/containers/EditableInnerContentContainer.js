@@ -116,7 +116,6 @@ const generateContentComponents = (contentJson=[], sectionIndex, onUpdate, onAdd
   })
 }
 
-
 const EditableInnerContentContainer = (props) => {
   const styles = {
     editActions: {
@@ -163,7 +162,7 @@ const EditableInnerContentContainer = (props) => {
         {
           props.onDelete &&
           <div className='edit-icon' style={styles.actionIcon} onClick={handleDelete}>
-            <FontAwesome name='remove' />
+            <FontAwesome name='trash' />
           </div>
         }
         {

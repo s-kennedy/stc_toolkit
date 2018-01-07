@@ -55,7 +55,7 @@ const Editable = (props) => {
   const styles = props.fullWidth ? fullWidthStyles : innerContentStyles
 
   const handleDelete = () => {
-    props.deleteContent(props.sectionIndex, props.contentIndex)
+    props.deleteContent(props.sectionIndex, props.index)
   }
 
   return (
