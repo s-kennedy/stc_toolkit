@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Save the Children Toolkit website`,
   },
   pathPrefix: `/stc_toolkit`,
   plugins: [
